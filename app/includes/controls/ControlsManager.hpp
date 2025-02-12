@@ -16,14 +16,14 @@
 #ifndef CONTROLSMANAGER_HPP
 #define CONTROLSMANAGER_HPP
 
-#include "enums.hpp"
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <unistd.h>
-#include <iostream>
 #include "../ZeroC/ClientThread.hpp"
+#include "enums.hpp"
 #include <QObject>
 #include <QThread>
+#include <fcntl.h>
+#include <iostream>
+#include <sys/mman.h>
+#include <unistd.h>
 
 /*!
  * @brief Class that manages the car's controls.
@@ -46,7 +46,7 @@ signals:
 private:
   ClientThread *m_clientObject;
 
-  QThread* m_clientThread;
+  QThread *m_clientThread;
 };
 
 #endif // CONTROLSMANAGER_HPP

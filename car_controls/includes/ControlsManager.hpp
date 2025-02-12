@@ -1,13 +1,13 @@
 #ifndef CONTROLSMANAGER_HPP
 #define CONTROLSMANAGER_HPP
 
+#include "../ZeroC/CarDataI.hpp"
+#include "../ZeroC/ClientThread.hpp"
 #include "EngineController.hpp"
 #include "JoysticksController.hpp"
-#include "../ZeroC/ClientThread.hpp"
-#include "../ZeroC/CarDataI.hpp"
 #include <QObject>
-#include <QThread>
 #include <QProcess>
+#include <QThread>
 
 class ControlsManager : public QObject {
   Q_OBJECT
@@ -20,10 +20,10 @@ private:
   Data::CarDataI *m_carDataObject;
 
   QThread *m_manualControllerThread;
-  QThread* m_processMonitorThread;
-  QThread* m_carDataThread;
-  QThread* m_clientThread;
-  QThread* m_joystickControlThread;
+  QThread *m_processMonitorThread;
+  QThread *m_carDataThread;
+  QThread *m_clientThread;
+  QThread *m_joystickControlThread;
 
   std::atomic<bool> m_threadRunning;
 
@@ -34,7 +34,7 @@ public:
   void setMode(DrivingMode mode);
   void readJoystickEnable();
   bool isProcessRunning(const QString &processName);
-  //bool isServiceRunning(const QString &serviceName);
+  // bool isServiceRunning(const QString &serviceName);
 };
 
 #endif // CONTROLSMANAGER_HPP

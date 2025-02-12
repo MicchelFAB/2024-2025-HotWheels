@@ -16,626 +16,709 @@
 #ifndef __Joystick_h__
 #define __Joystick_h__
 
-#include <IceUtil/PushDisableWarnings.h>
-#include <Ice/ProxyF.h>
-#include <Ice/ObjectF.h>
-#include <Ice/ValueF.h>
-#include <Ice/Exception.h>
-#include <Ice/LocalObject.h>
-#include <Ice/StreamHelpers.h>
 #include <Ice/Comparable.h>
-#include <Ice/Proxy.h>
-#include <Ice/Object.h>
-#include <Ice/GCObject.h>
-#include <Ice/Value.h>
-#include <Ice/Incoming.h>
+#include <Ice/Exception.h>
 #include <Ice/FactoryTableInit.h>
-#include <IceUtil/ScopedArray.h>
+#include <Ice/GCObject.h>
+#include <Ice/Incoming.h>
+#include <Ice/LocalObject.h>
+#include <Ice/Object.h>
+#include <Ice/ObjectF.h>
 #include <Ice/Optional.h>
+#include <Ice/Proxy.h>
+#include <Ice/ProxyF.h>
+#include <Ice/StreamHelpers.h>
+#include <Ice/Value.h>
+#include <Ice/ValueF.h>
+#include <IceUtil/PushDisableWarnings.h>
+#include <IceUtil/ScopedArray.h>
 #include <IceUtil/UndefSysMacros.h>
 
 #ifndef ICE_IGNORE_VERSION
-#   if ICE_INT_VERSION / 100 != 307
-#       error Ice version mismatch!
-#   endif
-#   if ICE_INT_VERSION % 100 >= 50
-#       error Beta header file detected
-#   endif
-#   if ICE_INT_VERSION % 100 < 10
-#       error Ice patch level mismatch!
-#   endif
+#if ICE_INT_VERSION / 100 != 307
+#error Ice version mismatch!
+#endif
+#if ICE_INT_VERSION % 100 >= 50
+#error Beta header file detected
+#endif
+#if ICE_INT_VERSION % 100 < 10
+#error Ice patch level mismatch!
+#endif
 #endif
 
 #ifdef ICE_CPP11_MAPPING // C++11 mapping
 
-namespace Data
-{
+namespace Data {
 
 class CarData;
 class CarDataPrx;
 
-}
+} // namespace Data
 
-namespace Data
-{
+namespace Data {
 
-class CarData : public virtual ::Ice::Object
-{
+class CarData : public virtual ::Ice::Object {
 public:
+  using ProxyType = CarDataPrx;
 
-    using ProxyType = CarDataPrx;
+  /**
+   * Determines whether this object supports an interface with the given Slice
+   * type ID.
+   * @param id The fully-scoped Slice type ID.
+   * @param current The Current object for the invocation.
+   * @return True if this object supports the interface, false, otherwise.
+   */
+  virtual bool ice_isA(::std::string id,
+                       const ::Ice::Current &current) const override;
 
-    /**
-     * Determines whether this object supports an interface with the given Slice type ID.
-     * @param id The fully-scoped Slice type ID.
-     * @param current The Current object for the invocation.
-     * @return True if this object supports the interface, false, otherwise.
-     */
-    virtual bool ice_isA(::std::string id, const ::Ice::Current& current) const override;
+  /**
+   * Obtains a list of the Slice type IDs representing the interfaces supported
+   * by this object.
+   * @param current The Current object for the invocation.
+   * @return A list of fully-scoped type IDs.
+   */
+  virtual ::std::vector<::std::string>
+  ice_ids(const ::Ice::Current &current) const override;
 
-    /**
-     * Obtains a list of the Slice type IDs representing the interfaces supported by this object.
-     * @param current The Current object for the invocation.
-     * @return A list of fully-scoped type IDs.
-     */
-    virtual ::std::vector<::std::string> ice_ids(const ::Ice::Current& current) const override;
+  /**
+   * Obtains a Slice type ID representing the most-derived interface supported
+   * by this object.
+   * @param current The Current object for the invocation.
+   * @return A fully-scoped type ID.
+   */
+  virtual ::std::string ice_id(const ::Ice::Current &current) const override;
 
-    /**
-     * Obtains a Slice type ID representing the most-derived interface supported by this object.
-     * @param current The Current object for the invocation.
-     * @return A fully-scoped type ID.
-     */
-    virtual ::std::string ice_id(const ::Ice::Current& current) const override;
+  /**
+   * Obtains the Slice type ID corresponding to this class.
+   * @return A fully-scoped type ID.
+   */
+  static const ::std::string &ice_staticId();
 
-    /**
-     * Obtains the Slice type ID corresponding to this class.
-     * @return A fully-scoped type ID.
-     */
-    static const ::std::string& ice_staticId();
+  virtual void setJoystickValue(bool newValue,
+                                const ::Ice::Current &current) = 0;
+  /// \cond INTERNAL
+  bool _iceD_setJoystickValue(::IceInternal::Incoming &,
+                              const ::Ice::Current &);
+  /// \endcond
 
-    virtual void setJoystickValue(bool newValue, const ::Ice::Current& current) = 0;
-    /// \cond INTERNAL
-    bool _iceD_setJoystickValue(::IceInternal::Incoming&, const ::Ice::Current&);
-    /// \endcond
+  virtual bool getJoystickValue(const ::Ice::Current &current) = 0;
+  /// \cond INTERNAL
+  bool _iceD_getJoystickValue(::IceInternal::Incoming &,
+                              const ::Ice::Current &);
+  /// \endcond
 
-    virtual bool getJoystickValue(const ::Ice::Current& current) = 0;
-    /// \cond INTERNAL
-    bool _iceD_getJoystickValue(::IceInternal::Incoming&, const ::Ice::Current&);
-    /// \endcond
+  virtual void setCarTemperatureValue(double newValue,
+                                      const ::Ice::Current &current) = 0;
+  /// \cond INTERNAL
+  bool _iceD_setCarTemperatureValue(::IceInternal::Incoming &,
+                                    const ::Ice::Current &);
+  /// \endcond
 
-    virtual void setCarTemperatureValue(double newValue, const ::Ice::Current& current) = 0;
-    /// \cond INTERNAL
-    bool _iceD_setCarTemperatureValue(::IceInternal::Incoming&, const ::Ice::Current&);
-    /// \endcond
+  virtual double getCarTemperatureValue(const ::Ice::Current &current) = 0;
+  /// \cond INTERNAL
+  bool _iceD_getCarTemperatureValue(::IceInternal::Incoming &,
+                                    const ::Ice::Current &);
+  /// \endcond
 
-    virtual double getCarTemperatureValue(const ::Ice::Current& current) = 0;
-    /// \cond INTERNAL
-    bool _iceD_getCarTemperatureValue(::IceInternal::Incoming&, const ::Ice::Current&);
-    /// \endcond
-
-    /// \cond INTERNAL
-    virtual bool _iceDispatch(::IceInternal::Incoming&, const ::Ice::Current&) override;
-    /// \endcond
+  /// \cond INTERNAL
+  virtual bool _iceDispatch(::IceInternal::Incoming &,
+                            const ::Ice::Current &) override;
+  /// \endcond
 };
 
-}
+} // namespace Data
 
-namespace Data
-{
+namespace Data {
 
-class CarDataPrx : public virtual ::Ice::Proxy<CarDataPrx, ::Ice::ObjectPrx>
-{
+class CarDataPrx : public virtual ::Ice::Proxy<CarDataPrx, ::Ice::ObjectPrx> {
 public:
+  void
+  setJoystickValue(bool newValue,
+                   const ::Ice::Context &context = ::Ice::noExplicitContext) {
+    _makePromiseOutgoing<void>(true, this, &CarDataPrx::_iceI_setJoystickValue,
+                               newValue, context)
+        .get();
+  }
 
-    void setJoystickValue(bool newValue, const ::Ice::Context& context = ::Ice::noExplicitContext)
-    {
-        _makePromiseOutgoing<void>(true, this, &CarDataPrx::_iceI_setJoystickValue, newValue, context).get();
-    }
+  template <template <typename> class P = ::std::promise>
+  auto setJoystickValueAsync(
+      bool newValue, const ::Ice::Context &context = ::Ice::noExplicitContext)
+      -> decltype(::std::declval<P<void>>().get_future()) {
+    return _makePromiseOutgoing<void, P>(
+        false, this, &CarDataPrx::_iceI_setJoystickValue, newValue, context);
+  }
 
-    template<template<typename> class P = ::std::promise>
-    auto setJoystickValueAsync(bool newValue, const ::Ice::Context& context = ::Ice::noExplicitContext)
-        -> decltype(::std::declval<P<void>>().get_future())
-    {
-        return _makePromiseOutgoing<void, P>(false, this, &CarDataPrx::_iceI_setJoystickValue, newValue, context);
-    }
+  ::std::function<void()> setJoystickValueAsync(
+      bool newValue, ::std::function<void()> response,
+      ::std::function<void(::std::exception_ptr)> ex = nullptr,
+      ::std::function<void(bool)> sent = nullptr,
+      const ::Ice::Context &context = ::Ice::noExplicitContext) {
+    return _makeLamdaOutgoing<void>(
+        std::move(response), std::move(ex), std::move(sent), this,
+        &Data::CarDataPrx::_iceI_setJoystickValue, newValue, context);
+  }
 
-    ::std::function<void()>
-    setJoystickValueAsync(bool newValue,
-                          ::std::function<void()> response,
-                          ::std::function<void(::std::exception_ptr)> ex = nullptr,
-                          ::std::function<void(bool)> sent = nullptr,
-                          const ::Ice::Context& context = ::Ice::noExplicitContext)
-    {
-        return _makeLamdaOutgoing<void>(std::move(response), std::move(ex), std::move(sent), this, &Data::CarDataPrx::_iceI_setJoystickValue, newValue, context);
-    }
+  /// \cond INTERNAL
+  void _iceI_setJoystickValue(
+      const ::std::shared_ptr<::IceInternal::OutgoingAsyncT<void>> &, bool,
+      const ::Ice::Context &);
+  /// \endcond
 
-    /// \cond INTERNAL
-    void _iceI_setJoystickValue(const ::std::shared_ptr<::IceInternal::OutgoingAsyncT<void>>&, bool, const ::Ice::Context&);
-    /// \endcond
+  bool
+  getJoystickValue(const ::Ice::Context &context = ::Ice::noExplicitContext) {
+    return _makePromiseOutgoing<bool>(
+               true, this, &CarDataPrx::_iceI_getJoystickValue, context)
+        .get();
+  }
 
-    bool getJoystickValue(const ::Ice::Context& context = ::Ice::noExplicitContext)
-    {
-        return _makePromiseOutgoing<bool>(true, this, &CarDataPrx::_iceI_getJoystickValue, context).get();
-    }
+  template <template <typename> class P = ::std::promise>
+  auto getJoystickValueAsync(
+      const ::Ice::Context &context = ::Ice::noExplicitContext)
+      -> decltype(::std::declval<P<bool>>().get_future()) {
+    return _makePromiseOutgoing<bool, P>(
+        false, this, &CarDataPrx::_iceI_getJoystickValue, context);
+  }
 
-    template<template<typename> class P = ::std::promise>
-    auto getJoystickValueAsync(const ::Ice::Context& context = ::Ice::noExplicitContext)
-        -> decltype(::std::declval<P<bool>>().get_future())
-    {
-        return _makePromiseOutgoing<bool, P>(false, this, &CarDataPrx::_iceI_getJoystickValue, context);
-    }
+  ::std::function<void()> getJoystickValueAsync(
+      ::std::function<void(bool)> response,
+      ::std::function<void(::std::exception_ptr)> ex = nullptr,
+      ::std::function<void(bool)> sent = nullptr,
+      const ::Ice::Context &context = ::Ice::noExplicitContext) {
+    return _makeLamdaOutgoing<bool>(
+        std::move(response), std::move(ex), std::move(sent), this,
+        &Data::CarDataPrx::_iceI_getJoystickValue, context);
+  }
 
-    ::std::function<void()>
-    getJoystickValueAsync(::std::function<void(bool)> response,
-                          ::std::function<void(::std::exception_ptr)> ex = nullptr,
-                          ::std::function<void(bool)> sent = nullptr,
-                          const ::Ice::Context& context = ::Ice::noExplicitContext)
-    {
-        return _makeLamdaOutgoing<bool>(std::move(response), std::move(ex), std::move(sent), this, &Data::CarDataPrx::_iceI_getJoystickValue, context);
-    }
+  /// \cond INTERNAL
+  void _iceI_getJoystickValue(
+      const ::std::shared_ptr<::IceInternal::OutgoingAsyncT<bool>> &,
+      const ::Ice::Context &);
+  /// \endcond
 
-    /// \cond INTERNAL
-    void _iceI_getJoystickValue(const ::std::shared_ptr<::IceInternal::OutgoingAsyncT<bool>>&, const ::Ice::Context&);
-    /// \endcond
+  void setCarTemperatureValue(double newValue, const ::Ice::Context &context =
+                                                   ::Ice::noExplicitContext) {
+    _makePromiseOutgoing<void>(true, this,
+                               &CarDataPrx::_iceI_setCarTemperatureValue,
+                               newValue, context)
+        .get();
+  }
 
-    void setCarTemperatureValue(double newValue, const ::Ice::Context& context = ::Ice::noExplicitContext)
-    {
-        _makePromiseOutgoing<void>(true, this, &CarDataPrx::_iceI_setCarTemperatureValue, newValue, context).get();
-    }
+  template <template <typename> class P = ::std::promise>
+  auto setCarTemperatureValueAsync(
+      double newValue, const ::Ice::Context &context = ::Ice::noExplicitContext)
+      -> decltype(::std::declval<P<void>>().get_future()) {
+    return _makePromiseOutgoing<void, P>(
+        false, this, &CarDataPrx::_iceI_setCarTemperatureValue, newValue,
+        context);
+  }
 
-    template<template<typename> class P = ::std::promise>
-    auto setCarTemperatureValueAsync(double newValue, const ::Ice::Context& context = ::Ice::noExplicitContext)
-        -> decltype(::std::declval<P<void>>().get_future())
-    {
-        return _makePromiseOutgoing<void, P>(false, this, &CarDataPrx::_iceI_setCarTemperatureValue, newValue, context);
-    }
+  ::std::function<void()> setCarTemperatureValueAsync(
+      double newValue, ::std::function<void()> response,
+      ::std::function<void(::std::exception_ptr)> ex = nullptr,
+      ::std::function<void(bool)> sent = nullptr,
+      const ::Ice::Context &context = ::Ice::noExplicitContext) {
+    return _makeLamdaOutgoing<void>(
+        std::move(response), std::move(ex), std::move(sent), this,
+        &Data::CarDataPrx::_iceI_setCarTemperatureValue, newValue, context);
+  }
 
-    ::std::function<void()>
-    setCarTemperatureValueAsync(double newValue,
-                                ::std::function<void()> response,
-                                ::std::function<void(::std::exception_ptr)> ex = nullptr,
-                                ::std::function<void(bool)> sent = nullptr,
-                                const ::Ice::Context& context = ::Ice::noExplicitContext)
-    {
-        return _makeLamdaOutgoing<void>(std::move(response), std::move(ex), std::move(sent), this, &Data::CarDataPrx::_iceI_setCarTemperatureValue, newValue, context);
-    }
+  /// \cond INTERNAL
+  void _iceI_setCarTemperatureValue(
+      const ::std::shared_ptr<::IceInternal::OutgoingAsyncT<void>> &, double,
+      const ::Ice::Context &);
+  /// \endcond
 
-    /// \cond INTERNAL
-    void _iceI_setCarTemperatureValue(const ::std::shared_ptr<::IceInternal::OutgoingAsyncT<void>>&, double, const ::Ice::Context&);
-    /// \endcond
+  double getCarTemperatureValue(
+      const ::Ice::Context &context = ::Ice::noExplicitContext) {
+    return _makePromiseOutgoing<double>(
+               true, this, &CarDataPrx::_iceI_getCarTemperatureValue, context)
+        .get();
+  }
 
-    double getCarTemperatureValue(const ::Ice::Context& context = ::Ice::noExplicitContext)
-    {
-        return _makePromiseOutgoing<double>(true, this, &CarDataPrx::_iceI_getCarTemperatureValue, context).get();
-    }
+  template <template <typename> class P = ::std::promise>
+  auto getCarTemperatureValueAsync(
+      const ::Ice::Context &context = ::Ice::noExplicitContext)
+      -> decltype(::std::declval<P<double>>().get_future()) {
+    return _makePromiseOutgoing<double, P>(
+        false, this, &CarDataPrx::_iceI_getCarTemperatureValue, context);
+  }
 
-    template<template<typename> class P = ::std::promise>
-    auto getCarTemperatureValueAsync(const ::Ice::Context& context = ::Ice::noExplicitContext)
-        -> decltype(::std::declval<P<double>>().get_future())
-    {
-        return _makePromiseOutgoing<double, P>(false, this, &CarDataPrx::_iceI_getCarTemperatureValue, context);
-    }
+  ::std::function<void()> getCarTemperatureValueAsync(
+      ::std::function<void(double)> response,
+      ::std::function<void(::std::exception_ptr)> ex = nullptr,
+      ::std::function<void(bool)> sent = nullptr,
+      const ::Ice::Context &context = ::Ice::noExplicitContext) {
+    return _makeLamdaOutgoing<double>(
+        std::move(response), std::move(ex), std::move(sent), this,
+        &Data::CarDataPrx::_iceI_getCarTemperatureValue, context);
+  }
 
-    ::std::function<void()>
-    getCarTemperatureValueAsync(::std::function<void(double)> response,
-                                ::std::function<void(::std::exception_ptr)> ex = nullptr,
-                                ::std::function<void(bool)> sent = nullptr,
-                                const ::Ice::Context& context = ::Ice::noExplicitContext)
-    {
-        return _makeLamdaOutgoing<double>(std::move(response), std::move(ex), std::move(sent), this, &Data::CarDataPrx::_iceI_getCarTemperatureValue, context);
-    }
+  /// \cond INTERNAL
+  void _iceI_getCarTemperatureValue(
+      const ::std::shared_ptr<::IceInternal::OutgoingAsyncT<double>> &,
+      const ::Ice::Context &);
+  /// \endcond
 
-    /// \cond INTERNAL
-    void _iceI_getCarTemperatureValue(const ::std::shared_ptr<::IceInternal::OutgoingAsyncT<double>>&, const ::Ice::Context&);
-    /// \endcond
-
-    /**
-     * Obtains the Slice type ID of this interface.
-     * @return The fully-scoped type ID.
-     */
-    static const ::std::string& ice_staticId();
+  /**
+   * Obtains the Slice type ID of this interface.
+   * @return The fully-scoped type ID.
+   */
+  static const ::std::string &ice_staticId();
 
 protected:
+  /// \cond INTERNAL
+  CarDataPrx() = default;
+  friend ::std::shared_ptr<CarDataPrx> IceInternal::createProxy<CarDataPrx>();
 
-    /// \cond INTERNAL
-    CarDataPrx() = default;
-    friend ::std::shared_ptr<CarDataPrx> IceInternal::createProxy<CarDataPrx>();
-
-    virtual ::std::shared_ptr<::Ice::ObjectPrx> _newInstance() const override;
-    /// \endcond
+  virtual ::std::shared_ptr<::Ice::ObjectPrx> _newInstance() const override;
+  /// \endcond
 };
 
-}
+} // namespace Data
 
 /// \cond STREAM
-namespace Ice
-{
-
-}
+namespace Ice {}
 /// \endcond
 
 /// \cond INTERNAL
-namespace Data
-{
+namespace Data {
 
 using CarDataPtr = ::std::shared_ptr<CarData>;
 using CarDataPrxPtr = ::std::shared_ptr<CarDataPrx>;
 
-}
+} // namespace Data
 /// \endcond
 
 #else // C++98 mapping
 
-namespace IceProxy
-{
+namespace IceProxy {
 
-namespace Data
-{
+namespace Data {
 
 class CarData;
 /// \cond INTERNAL
-void _readProxy(::Ice::InputStream*, ::IceInternal::ProxyHandle< CarData>&);
-::IceProxy::Ice::Object* upCast(CarData*);
+void _readProxy(::Ice::InputStream *, ::IceInternal::ProxyHandle<CarData> &);
+::IceProxy::Ice::Object *upCast(CarData *);
 /// \endcond
 
-}
+} // namespace Data
 
-}
+} // namespace IceProxy
 
-namespace Data
-{
+namespace Data {
 
 class CarData;
 /// \cond INTERNAL
-::Ice::Object* upCast(CarData*);
+::Ice::Object *upCast(CarData *);
 /// \endcond
-typedef ::IceInternal::Handle< CarData> CarDataPtr;
-typedef ::IceInternal::ProxyHandle< ::IceProxy::Data::CarData> CarDataPrx;
+typedef ::IceInternal::Handle<CarData> CarDataPtr;
+typedef ::IceInternal::ProxyHandle<::IceProxy::Data::CarData> CarDataPrx;
 typedef CarDataPrx CarDataPrxPtr;
 /// \cond INTERNAL
-void _icePatchObjectPtr(CarDataPtr&, const ::Ice::ObjectPtr&);
+void _icePatchObjectPtr(CarDataPtr &, const ::Ice::ObjectPtr &);
 /// \endcond
 
-}
+} // namespace Data
 
-namespace Data
-{
+namespace Data {
 
 /**
  * Base class for asynchronous callback wrapper classes used for calls to
  * IceProxy::Data::CarData::begin_setJoystickValue.
- * Create a wrapper instance by calling ::Data::newCallback_CarData_setJoystickValue.
+ * Create a wrapper instance by calling
+ * ::Data::newCallback_CarData_setJoystickValue.
  */
-class Callback_CarData_setJoystickValue_Base : public virtual ::IceInternal::CallbackBase { };
-typedef ::IceUtil::Handle< Callback_CarData_setJoystickValue_Base> Callback_CarData_setJoystickValuePtr;
+class Callback_CarData_setJoystickValue_Base
+    : public virtual ::IceInternal::CallbackBase {};
+typedef ::IceUtil::Handle<Callback_CarData_setJoystickValue_Base>
+    Callback_CarData_setJoystickValuePtr;
 
 /**
  * Base class for asynchronous callback wrapper classes used for calls to
  * IceProxy::Data::CarData::begin_getJoystickValue.
- * Create a wrapper instance by calling ::Data::newCallback_CarData_getJoystickValue.
+ * Create a wrapper instance by calling
+ * ::Data::newCallback_CarData_getJoystickValue.
  */
-class Callback_CarData_getJoystickValue_Base : public virtual ::IceInternal::CallbackBase { };
-typedef ::IceUtil::Handle< Callback_CarData_getJoystickValue_Base> Callback_CarData_getJoystickValuePtr;
+class Callback_CarData_getJoystickValue_Base
+    : public virtual ::IceInternal::CallbackBase {};
+typedef ::IceUtil::Handle<Callback_CarData_getJoystickValue_Base>
+    Callback_CarData_getJoystickValuePtr;
 
 /**
  * Base class for asynchronous callback wrapper classes used for calls to
  * IceProxy::Data::CarData::begin_setCarTemperatureValue.
- * Create a wrapper instance by calling ::Data::newCallback_CarData_setCarTemperatureValue.
+ * Create a wrapper instance by calling
+ * ::Data::newCallback_CarData_setCarTemperatureValue.
  */
-class Callback_CarData_setCarTemperatureValue_Base : public virtual ::IceInternal::CallbackBase { };
-typedef ::IceUtil::Handle< Callback_CarData_setCarTemperatureValue_Base> Callback_CarData_setCarTemperatureValuePtr;
+class Callback_CarData_setCarTemperatureValue_Base
+    : public virtual ::IceInternal::CallbackBase {};
+typedef ::IceUtil::Handle<Callback_CarData_setCarTemperatureValue_Base>
+    Callback_CarData_setCarTemperatureValuePtr;
 
 /**
  * Base class for asynchronous callback wrapper classes used for calls to
  * IceProxy::Data::CarData::begin_getCarTemperatureValue.
- * Create a wrapper instance by calling ::Data::newCallback_CarData_getCarTemperatureValue.
+ * Create a wrapper instance by calling
+ * ::Data::newCallback_CarData_getCarTemperatureValue.
  */
-class Callback_CarData_getCarTemperatureValue_Base : public virtual ::IceInternal::CallbackBase { };
-typedef ::IceUtil::Handle< Callback_CarData_getCarTemperatureValue_Base> Callback_CarData_getCarTemperatureValuePtr;
+class Callback_CarData_getCarTemperatureValue_Base
+    : public virtual ::IceInternal::CallbackBase {};
+typedef ::IceUtil::Handle<Callback_CarData_getCarTemperatureValue_Base>
+    Callback_CarData_getCarTemperatureValuePtr;
 
-}
+} // namespace Data
 
-namespace IceProxy
-{
+namespace IceProxy {
 
-namespace Data
-{
+namespace Data {
 
-class CarData : public virtual ::Ice::Proxy<CarData, ::IceProxy::Ice::Object>
-{
+class CarData : public virtual ::Ice::Proxy<CarData, ::IceProxy::Ice::Object> {
 public:
+  void
+  setJoystickValue(bool newValue,
+                   const ::Ice::Context &context = ::Ice::noExplicitContext) {
+    end_setJoystickValue(_iceI_begin_setJoystickValue(
+        newValue, context, ::IceInternal::dummyCallback, 0, true));
+  }
 
-    void setJoystickValue(bool newValue, const ::Ice::Context& context = ::Ice::noExplicitContext)
-    {
-        end_setJoystickValue(_iceI_begin_setJoystickValue(newValue, context, ::IceInternal::dummyCallback, 0, true));
-    }
+  ::Ice::AsyncResultPtr begin_setJoystickValue(
+      bool newValue, const ::Ice::Context &context = ::Ice::noExplicitContext) {
+    return _iceI_begin_setJoystickValue(newValue, context,
+                                        ::IceInternal::dummyCallback, 0);
+  }
 
-    ::Ice::AsyncResultPtr begin_setJoystickValue(bool newValue, const ::Ice::Context& context = ::Ice::noExplicitContext)
-    {
-        return _iceI_begin_setJoystickValue(newValue, context, ::IceInternal::dummyCallback, 0);
-    }
+  ::Ice::AsyncResultPtr
+  begin_setJoystickValue(bool newValue, const ::Ice::CallbackPtr &cb,
+                         const ::Ice::LocalObjectPtr &cookie = 0) {
+    return _iceI_begin_setJoystickValue(newValue, ::Ice::noExplicitContext, cb,
+                                        cookie);
+  }
 
-    ::Ice::AsyncResultPtr begin_setJoystickValue(bool newValue, const ::Ice::CallbackPtr& cb, const ::Ice::LocalObjectPtr& cookie = 0)
-    {
-        return _iceI_begin_setJoystickValue(newValue, ::Ice::noExplicitContext, cb, cookie);
-    }
+  ::Ice::AsyncResultPtr
+  begin_setJoystickValue(bool newValue, const ::Ice::Context &context,
+                         const ::Ice::CallbackPtr &cb,
+                         const ::Ice::LocalObjectPtr &cookie = 0) {
+    return _iceI_begin_setJoystickValue(newValue, context, cb, cookie);
+  }
 
-    ::Ice::AsyncResultPtr begin_setJoystickValue(bool newValue, const ::Ice::Context& context, const ::Ice::CallbackPtr& cb, const ::Ice::LocalObjectPtr& cookie = 0)
-    {
-        return _iceI_begin_setJoystickValue(newValue, context, cb, cookie);
-    }
+  ::Ice::AsyncResultPtr
+  begin_setJoystickValue(bool newValue,
+                         const ::Data::Callback_CarData_setJoystickValuePtr &cb,
+                         const ::Ice::LocalObjectPtr &cookie = 0) {
+    return _iceI_begin_setJoystickValue(newValue, ::Ice::noExplicitContext, cb,
+                                        cookie);
+  }
 
-    ::Ice::AsyncResultPtr begin_setJoystickValue(bool newValue, const ::Data::Callback_CarData_setJoystickValuePtr& cb, const ::Ice::LocalObjectPtr& cookie = 0)
-    {
-        return _iceI_begin_setJoystickValue(newValue, ::Ice::noExplicitContext, cb, cookie);
-    }
+  ::Ice::AsyncResultPtr
+  begin_setJoystickValue(bool newValue, const ::Ice::Context &context,
+                         const ::Data::Callback_CarData_setJoystickValuePtr &cb,
+                         const ::Ice::LocalObjectPtr &cookie = 0) {
+    return _iceI_begin_setJoystickValue(newValue, context, cb, cookie);
+  }
 
-    ::Ice::AsyncResultPtr begin_setJoystickValue(bool newValue, const ::Ice::Context& context, const ::Data::Callback_CarData_setJoystickValuePtr& cb, const ::Ice::LocalObjectPtr& cookie = 0)
-    {
-        return _iceI_begin_setJoystickValue(newValue, context, cb, cookie);
-    }
-
-    void end_setJoystickValue(const ::Ice::AsyncResultPtr& result);
+  void end_setJoystickValue(const ::Ice::AsyncResultPtr &result);
 
 private:
-
-    ::Ice::AsyncResultPtr _iceI_begin_setJoystickValue(bool, const ::Ice::Context&, const ::IceInternal::CallbackBasePtr&, const ::Ice::LocalObjectPtr& cookie = 0, bool sync = false);
+  ::Ice::AsyncResultPtr _iceI_begin_setJoystickValue(
+      bool, const ::Ice::Context &, const ::IceInternal::CallbackBasePtr &,
+      const ::Ice::LocalObjectPtr &cookie = 0, bool sync = false);
 
 public:
+  bool
+  getJoystickValue(const ::Ice::Context &context = ::Ice::noExplicitContext) {
+    return end_getJoystickValue(_iceI_begin_getJoystickValue(
+        context, ::IceInternal::dummyCallback, 0, true));
+  }
 
-    bool getJoystickValue(const ::Ice::Context& context = ::Ice::noExplicitContext)
-    {
-        return end_getJoystickValue(_iceI_begin_getJoystickValue(context, ::IceInternal::dummyCallback, 0, true));
-    }
+  ::Ice::AsyncResultPtr begin_getJoystickValue(
+      const ::Ice::Context &context = ::Ice::noExplicitContext) {
+    return _iceI_begin_getJoystickValue(context, ::IceInternal::dummyCallback,
+                                        0);
+  }
 
-    ::Ice::AsyncResultPtr begin_getJoystickValue(const ::Ice::Context& context = ::Ice::noExplicitContext)
-    {
-        return _iceI_begin_getJoystickValue(context, ::IceInternal::dummyCallback, 0);
-    }
+  ::Ice::AsyncResultPtr
+  begin_getJoystickValue(const ::Ice::CallbackPtr &cb,
+                         const ::Ice::LocalObjectPtr &cookie = 0) {
+    return _iceI_begin_getJoystickValue(::Ice::noExplicitContext, cb, cookie);
+  }
 
-    ::Ice::AsyncResultPtr begin_getJoystickValue(const ::Ice::CallbackPtr& cb, const ::Ice::LocalObjectPtr& cookie = 0)
-    {
-        return _iceI_begin_getJoystickValue(::Ice::noExplicitContext, cb, cookie);
-    }
+  ::Ice::AsyncResultPtr
+  begin_getJoystickValue(const ::Ice::Context &context,
+                         const ::Ice::CallbackPtr &cb,
+                         const ::Ice::LocalObjectPtr &cookie = 0) {
+    return _iceI_begin_getJoystickValue(context, cb, cookie);
+  }
 
-    ::Ice::AsyncResultPtr begin_getJoystickValue(const ::Ice::Context& context, const ::Ice::CallbackPtr& cb, const ::Ice::LocalObjectPtr& cookie = 0)
-    {
-        return _iceI_begin_getJoystickValue(context, cb, cookie);
-    }
+  ::Ice::AsyncResultPtr
+  begin_getJoystickValue(const ::Data::Callback_CarData_getJoystickValuePtr &cb,
+                         const ::Ice::LocalObjectPtr &cookie = 0) {
+    return _iceI_begin_getJoystickValue(::Ice::noExplicitContext, cb, cookie);
+  }
 
-    ::Ice::AsyncResultPtr begin_getJoystickValue(const ::Data::Callback_CarData_getJoystickValuePtr& cb, const ::Ice::LocalObjectPtr& cookie = 0)
-    {
-        return _iceI_begin_getJoystickValue(::Ice::noExplicitContext, cb, cookie);
-    }
+  ::Ice::AsyncResultPtr
+  begin_getJoystickValue(const ::Ice::Context &context,
+                         const ::Data::Callback_CarData_getJoystickValuePtr &cb,
+                         const ::Ice::LocalObjectPtr &cookie = 0) {
+    return _iceI_begin_getJoystickValue(context, cb, cookie);
+  }
 
-    ::Ice::AsyncResultPtr begin_getJoystickValue(const ::Ice::Context& context, const ::Data::Callback_CarData_getJoystickValuePtr& cb, const ::Ice::LocalObjectPtr& cookie = 0)
-    {
-        return _iceI_begin_getJoystickValue(context, cb, cookie);
-    }
-
-    bool end_getJoystickValue(const ::Ice::AsyncResultPtr& result);
+  bool end_getJoystickValue(const ::Ice::AsyncResultPtr &result);
 
 private:
-
-    ::Ice::AsyncResultPtr _iceI_begin_getJoystickValue(const ::Ice::Context&, const ::IceInternal::CallbackBasePtr&, const ::Ice::LocalObjectPtr& cookie = 0, bool sync = false);
+  ::Ice::AsyncResultPtr _iceI_begin_getJoystickValue(
+      const ::Ice::Context &, const ::IceInternal::CallbackBasePtr &,
+      const ::Ice::LocalObjectPtr &cookie = 0, bool sync = false);
 
 public:
+  void setCarTemperatureValue(
+      ::Ice::Double newValue,
+      const ::Ice::Context &context = ::Ice::noExplicitContext) {
+    end_setCarTemperatureValue(_iceI_begin_setCarTemperatureValue(
+        newValue, context, ::IceInternal::dummyCallback, 0, true));
+  }
 
-    void setCarTemperatureValue(::Ice::Double newValue, const ::Ice::Context& context = ::Ice::noExplicitContext)
-    {
-        end_setCarTemperatureValue(_iceI_begin_setCarTemperatureValue(newValue, context, ::IceInternal::dummyCallback, 0, true));
-    }
+  ::Ice::AsyncResultPtr begin_setCarTemperatureValue(
+      ::Ice::Double newValue,
+      const ::Ice::Context &context = ::Ice::noExplicitContext) {
+    return _iceI_begin_setCarTemperatureValue(newValue, context,
+                                              ::IceInternal::dummyCallback, 0);
+  }
 
-    ::Ice::AsyncResultPtr begin_setCarTemperatureValue(::Ice::Double newValue, const ::Ice::Context& context = ::Ice::noExplicitContext)
-    {
-        return _iceI_begin_setCarTemperatureValue(newValue, context, ::IceInternal::dummyCallback, 0);
-    }
+  ::Ice::AsyncResultPtr
+  begin_setCarTemperatureValue(::Ice::Double newValue,
+                               const ::Ice::CallbackPtr &cb,
+                               const ::Ice::LocalObjectPtr &cookie = 0) {
+    return _iceI_begin_setCarTemperatureValue(
+        newValue, ::Ice::noExplicitContext, cb, cookie);
+  }
 
-    ::Ice::AsyncResultPtr begin_setCarTemperatureValue(::Ice::Double newValue, const ::Ice::CallbackPtr& cb, const ::Ice::LocalObjectPtr& cookie = 0)
-    {
-        return _iceI_begin_setCarTemperatureValue(newValue, ::Ice::noExplicitContext, cb, cookie);
-    }
+  ::Ice::AsyncResultPtr begin_setCarTemperatureValue(
+      ::Ice::Double newValue, const ::Ice::Context &context,
+      const ::Ice::CallbackPtr &cb, const ::Ice::LocalObjectPtr &cookie = 0) {
+    return _iceI_begin_setCarTemperatureValue(newValue, context, cb, cookie);
+  }
 
-    ::Ice::AsyncResultPtr begin_setCarTemperatureValue(::Ice::Double newValue, const ::Ice::Context& context, const ::Ice::CallbackPtr& cb, const ::Ice::LocalObjectPtr& cookie = 0)
-    {
-        return _iceI_begin_setCarTemperatureValue(newValue, context, cb, cookie);
-    }
+  ::Ice::AsyncResultPtr begin_setCarTemperatureValue(
+      ::Ice::Double newValue,
+      const ::Data::Callback_CarData_setCarTemperatureValuePtr &cb,
+      const ::Ice::LocalObjectPtr &cookie = 0) {
+    return _iceI_begin_setCarTemperatureValue(
+        newValue, ::Ice::noExplicitContext, cb, cookie);
+  }
 
-    ::Ice::AsyncResultPtr begin_setCarTemperatureValue(::Ice::Double newValue, const ::Data::Callback_CarData_setCarTemperatureValuePtr& cb, const ::Ice::LocalObjectPtr& cookie = 0)
-    {
-        return _iceI_begin_setCarTemperatureValue(newValue, ::Ice::noExplicitContext, cb, cookie);
-    }
+  ::Ice::AsyncResultPtr begin_setCarTemperatureValue(
+      ::Ice::Double newValue, const ::Ice::Context &context,
+      const ::Data::Callback_CarData_setCarTemperatureValuePtr &cb,
+      const ::Ice::LocalObjectPtr &cookie = 0) {
+    return _iceI_begin_setCarTemperatureValue(newValue, context, cb, cookie);
+  }
 
-    ::Ice::AsyncResultPtr begin_setCarTemperatureValue(::Ice::Double newValue, const ::Ice::Context& context, const ::Data::Callback_CarData_setCarTemperatureValuePtr& cb, const ::Ice::LocalObjectPtr& cookie = 0)
-    {
-        return _iceI_begin_setCarTemperatureValue(newValue, context, cb, cookie);
-    }
-
-    void end_setCarTemperatureValue(const ::Ice::AsyncResultPtr& result);
+  void end_setCarTemperatureValue(const ::Ice::AsyncResultPtr &result);
 
 private:
-
-    ::Ice::AsyncResultPtr _iceI_begin_setCarTemperatureValue(::Ice::Double, const ::Ice::Context&, const ::IceInternal::CallbackBasePtr&, const ::Ice::LocalObjectPtr& cookie = 0, bool sync = false);
+  ::Ice::AsyncResultPtr
+  _iceI_begin_setCarTemperatureValue(::Ice::Double, const ::Ice::Context &,
+                                     const ::IceInternal::CallbackBasePtr &,
+                                     const ::Ice::LocalObjectPtr &cookie = 0,
+                                     bool sync = false);
 
 public:
+  ::Ice::Double getCarTemperatureValue(
+      const ::Ice::Context &context = ::Ice::noExplicitContext) {
+    return end_getCarTemperatureValue(_iceI_begin_getCarTemperatureValue(
+        context, ::IceInternal::dummyCallback, 0, true));
+  }
 
-    ::Ice::Double getCarTemperatureValue(const ::Ice::Context& context = ::Ice::noExplicitContext)
-    {
-        return end_getCarTemperatureValue(_iceI_begin_getCarTemperatureValue(context, ::IceInternal::dummyCallback, 0, true));
-    }
+  ::Ice::AsyncResultPtr begin_getCarTemperatureValue(
+      const ::Ice::Context &context = ::Ice::noExplicitContext) {
+    return _iceI_begin_getCarTemperatureValue(context,
+                                              ::IceInternal::dummyCallback, 0);
+  }
 
-    ::Ice::AsyncResultPtr begin_getCarTemperatureValue(const ::Ice::Context& context = ::Ice::noExplicitContext)
-    {
-        return _iceI_begin_getCarTemperatureValue(context, ::IceInternal::dummyCallback, 0);
-    }
+  ::Ice::AsyncResultPtr
+  begin_getCarTemperatureValue(const ::Ice::CallbackPtr &cb,
+                               const ::Ice::LocalObjectPtr &cookie = 0) {
+    return _iceI_begin_getCarTemperatureValue(::Ice::noExplicitContext, cb,
+                                              cookie);
+  }
 
-    ::Ice::AsyncResultPtr begin_getCarTemperatureValue(const ::Ice::CallbackPtr& cb, const ::Ice::LocalObjectPtr& cookie = 0)
-    {
-        return _iceI_begin_getCarTemperatureValue(::Ice::noExplicitContext, cb, cookie);
-    }
+  ::Ice::AsyncResultPtr
+  begin_getCarTemperatureValue(const ::Ice::Context &context,
+                               const ::Ice::CallbackPtr &cb,
+                               const ::Ice::LocalObjectPtr &cookie = 0) {
+    return _iceI_begin_getCarTemperatureValue(context, cb, cookie);
+  }
 
-    ::Ice::AsyncResultPtr begin_getCarTemperatureValue(const ::Ice::Context& context, const ::Ice::CallbackPtr& cb, const ::Ice::LocalObjectPtr& cookie = 0)
-    {
-        return _iceI_begin_getCarTemperatureValue(context, cb, cookie);
-    }
+  ::Ice::AsyncResultPtr begin_getCarTemperatureValue(
+      const ::Data::Callback_CarData_getCarTemperatureValuePtr &cb,
+      const ::Ice::LocalObjectPtr &cookie = 0) {
+    return _iceI_begin_getCarTemperatureValue(::Ice::noExplicitContext, cb,
+                                              cookie);
+  }
 
-    ::Ice::AsyncResultPtr begin_getCarTemperatureValue(const ::Data::Callback_CarData_getCarTemperatureValuePtr& cb, const ::Ice::LocalObjectPtr& cookie = 0)
-    {
-        return _iceI_begin_getCarTemperatureValue(::Ice::noExplicitContext, cb, cookie);
-    }
+  ::Ice::AsyncResultPtr begin_getCarTemperatureValue(
+      const ::Ice::Context &context,
+      const ::Data::Callback_CarData_getCarTemperatureValuePtr &cb,
+      const ::Ice::LocalObjectPtr &cookie = 0) {
+    return _iceI_begin_getCarTemperatureValue(context, cb, cookie);
+  }
 
-    ::Ice::AsyncResultPtr begin_getCarTemperatureValue(const ::Ice::Context& context, const ::Data::Callback_CarData_getCarTemperatureValuePtr& cb, const ::Ice::LocalObjectPtr& cookie = 0)
-    {
-        return _iceI_begin_getCarTemperatureValue(context, cb, cookie);
-    }
-
-    ::Ice::Double end_getCarTemperatureValue(const ::Ice::AsyncResultPtr& result);
+  ::Ice::Double end_getCarTemperatureValue(const ::Ice::AsyncResultPtr &result);
 
 private:
-
-    ::Ice::AsyncResultPtr _iceI_begin_getCarTemperatureValue(const ::Ice::Context&, const ::IceInternal::CallbackBasePtr&, const ::Ice::LocalObjectPtr& cookie = 0, bool sync = false);
+  ::Ice::AsyncResultPtr _iceI_begin_getCarTemperatureValue(
+      const ::Ice::Context &, const ::IceInternal::CallbackBasePtr &,
+      const ::Ice::LocalObjectPtr &cookie = 0, bool sync = false);
 
 public:
-
-    /**
-     * Obtains the Slice type ID corresponding to this interface.
-     * @return A fully-scoped type ID.
-     */
-    static const ::std::string& ice_staticId();
+  /**
+   * Obtains the Slice type ID corresponding to this interface.
+   * @return A fully-scoped type ID.
+   */
+  static const ::std::string &ice_staticId();
 
 protected:
-    /// \cond INTERNAL
+  /// \cond INTERNAL
 
-    virtual ::IceProxy::Ice::Object* _newInstance() const;
-    /// \endcond
+  virtual ::IceProxy::Ice::Object *_newInstance() const;
+  /// \endcond
 };
 
-}
+} // namespace Data
 
-}
+} // namespace IceProxy
 
-namespace Data
-{
+namespace Data {
 
-class CarData : public virtual ::Ice::Object
-{
+class CarData : public virtual ::Ice::Object {
 public:
+  typedef CarDataPrx ProxyType;
+  typedef CarDataPtr PointerType;
 
-    typedef CarDataPrx ProxyType;
-    typedef CarDataPtr PointerType;
-
-    virtual ~CarData();
+  virtual ~CarData();
 
 #ifdef ICE_CPP11_COMPILER
-    CarData() = default;
-    CarData(const CarData&) = default;
-    CarData& operator=(const CarData&) = default;
+  CarData() = default;
+  CarData(const CarData &) = default;
+  CarData &operator=(const CarData &) = default;
 #endif
 
-    /**
-     * Determines whether this object supports an interface with the given Slice type ID.
-     * @param id The fully-scoped Slice type ID.
-     * @param current The Current object for the invocation.
-     * @return True if this object supports the interface, false, otherwise.
-     */
-    virtual bool ice_isA(const ::std::string& id, const ::Ice::Current& current = ::Ice::emptyCurrent) const;
+  /**
+   * Determines whether this object supports an interface with the given Slice
+   * type ID.
+   * @param id The fully-scoped Slice type ID.
+   * @param current The Current object for the invocation.
+   * @return True if this object supports the interface, false, otherwise.
+   */
+  virtual bool
+  ice_isA(const ::std::string &id,
+          const ::Ice::Current &current = ::Ice::emptyCurrent) const;
 
-    /**
-     * Obtains a list of the Slice type IDs representing the interfaces supported by this object.
-     * @param current The Current object for the invocation.
-     * @return A list of fully-scoped type IDs.
-     */
-    virtual ::std::vector< ::std::string> ice_ids(const ::Ice::Current& current = ::Ice::emptyCurrent) const;
+  /**
+   * Obtains a list of the Slice type IDs representing the interfaces supported
+   * by this object.
+   * @param current The Current object for the invocation.
+   * @return A list of fully-scoped type IDs.
+   */
+  virtual ::std::vector<::std::string>
+  ice_ids(const ::Ice::Current &current = ::Ice::emptyCurrent) const;
 
-    /**
-     * Obtains a Slice type ID representing the most-derived interface supported by this object.
-     * @param current The Current object for the invocation.
-     * @return A fully-scoped type ID.
-     */
-    virtual const ::std::string& ice_id(const ::Ice::Current& current = ::Ice::emptyCurrent) const;
+  /**
+   * Obtains a Slice type ID representing the most-derived interface supported
+   * by this object.
+   * @param current The Current object for the invocation.
+   * @return A fully-scoped type ID.
+   */
+  virtual const ::std::string &
+  ice_id(const ::Ice::Current &current = ::Ice::emptyCurrent) const;
 
-    /**
-     * Obtains the Slice type ID corresponding to this class.
-     * @return A fully-scoped type ID.
-     */
-    static const ::std::string& ice_staticId();
+  /**
+   * Obtains the Slice type ID corresponding to this class.
+   * @return A fully-scoped type ID.
+   */
+  static const ::std::string &ice_staticId();
 
-    virtual void setJoystickValue(bool newValue, const ::Ice::Current& current = ::Ice::emptyCurrent) = 0;
-    /// \cond INTERNAL
-    bool _iceD_setJoystickValue(::IceInternal::Incoming&, const ::Ice::Current&);
-    /// \endcond
+  virtual void
+  setJoystickValue(bool newValue,
+                   const ::Ice::Current &current = ::Ice::emptyCurrent) = 0;
+  /// \cond INTERNAL
+  bool _iceD_setJoystickValue(::IceInternal::Incoming &,
+                              const ::Ice::Current &);
+  /// \endcond
 
-    virtual bool getJoystickValue(const ::Ice::Current& current = ::Ice::emptyCurrent) = 0;
-    /// \cond INTERNAL
-    bool _iceD_getJoystickValue(::IceInternal::Incoming&, const ::Ice::Current&);
-    /// \endcond
+  virtual bool
+  getJoystickValue(const ::Ice::Current &current = ::Ice::emptyCurrent) = 0;
+  /// \cond INTERNAL
+  bool _iceD_getJoystickValue(::IceInternal::Incoming &,
+                              const ::Ice::Current &);
+  /// \endcond
 
-    virtual void setCarTemperatureValue(::Ice::Double newValue, const ::Ice::Current& current = ::Ice::emptyCurrent) = 0;
-    /// \cond INTERNAL
-    bool _iceD_setCarTemperatureValue(::IceInternal::Incoming&, const ::Ice::Current&);
-    /// \endcond
+  virtual void setCarTemperatureValue(
+      ::Ice::Double newValue,
+      const ::Ice::Current &current = ::Ice::emptyCurrent) = 0;
+  /// \cond INTERNAL
+  bool _iceD_setCarTemperatureValue(::IceInternal::Incoming &,
+                                    const ::Ice::Current &);
+  /// \endcond
 
-    virtual ::Ice::Double getCarTemperatureValue(const ::Ice::Current& current = ::Ice::emptyCurrent) = 0;
-    /// \cond INTERNAL
-    bool _iceD_getCarTemperatureValue(::IceInternal::Incoming&, const ::Ice::Current&);
-    /// \endcond
+  virtual ::Ice::Double getCarTemperatureValue(
+      const ::Ice::Current &current = ::Ice::emptyCurrent) = 0;
+  /// \cond INTERNAL
+  bool _iceD_getCarTemperatureValue(::IceInternal::Incoming &,
+                                    const ::Ice::Current &);
+  /// \endcond
 
-    /// \cond INTERNAL
-    virtual bool _iceDispatch(::IceInternal::Incoming&, const ::Ice::Current&);
-    /// \endcond
+  /// \cond INTERNAL
+  virtual bool _iceDispatch(::IceInternal::Incoming &, const ::Ice::Current &);
+  /// \endcond
 
 protected:
-
-    /// \cond STREAM
-    virtual void _iceWriteImpl(::Ice::OutputStream*) const;
-    virtual void _iceReadImpl(::Ice::InputStream*);
-    /// \endcond
+  /// \cond STREAM
+  virtual void _iceWriteImpl(::Ice::OutputStream *) const;
+  virtual void _iceReadImpl(::Ice::InputStream *);
+  /// \endcond
 };
 
 /// \cond INTERNAL
-inline bool operator==(const CarData& lhs, const CarData& rhs)
-{
-    return static_cast<const ::Ice::Object&>(lhs) == static_cast<const ::Ice::Object&>(rhs);
+inline bool operator==(const CarData &lhs, const CarData &rhs) {
+  return static_cast<const ::Ice::Object &>(lhs) ==
+         static_cast<const ::Ice::Object &>(rhs);
 }
 
-inline bool operator<(const CarData& lhs, const CarData& rhs)
-{
-    return static_cast<const ::Ice::Object&>(lhs) < static_cast<const ::Ice::Object&>(rhs);
+inline bool operator<(const CarData &lhs, const CarData &rhs) {
+  return static_cast<const ::Ice::Object &>(lhs) <
+         static_cast<const ::Ice::Object &>(rhs);
 }
 /// \endcond
 
-}
+} // namespace Data
 
 /// \cond STREAM
-namespace Ice
-{
-
-}
+namespace Ice {}
 /// \endcond
 
-namespace Data
-{
+namespace Data {
 
 /**
  * Type-safe asynchronous callback wrapper class used for calls to
  * IceProxy::Data::CarData::begin_setJoystickValue.
- * Create a wrapper instance by calling ::Data::newCallback_CarData_setJoystickValue.
+ * Create a wrapper instance by calling
+ * ::Data::newCallback_CarData_setJoystickValue.
  */
-template<class T>
-class CallbackNC_CarData_setJoystickValue : public Callback_CarData_setJoystickValue_Base, public ::IceInternal::OnewayCallbackNC<T>
-{
+template <class T>
+class CallbackNC_CarData_setJoystickValue
+    : public Callback_CarData_setJoystickValue_Base,
+      public ::IceInternal::OnewayCallbackNC<T> {
 public:
+  typedef IceUtil::Handle<T> TPtr;
 
-    typedef IceUtil::Handle<T> TPtr;
+  typedef void (T::*Exception)(const ::Ice::Exception &);
+  typedef void (T::*Sent)(bool);
+  typedef void (T::*Response)();
 
-    typedef void (T::*Exception)(const ::Ice::Exception&);
-    typedef void (T::*Sent)(bool);
-    typedef void (T::*Response)();
-
-    CallbackNC_CarData_setJoystickValue(const TPtr& obj, Response cb, Exception excb, Sent sentcb)
-        : ::IceInternal::OnewayCallbackNC<T>(obj, cb, excb, sentcb)
-    {
-    }
+  CallbackNC_CarData_setJoystickValue(const TPtr &obj, Response cb,
+                                      Exception excb, Sent sentcb)
+      : ::IceInternal::OnewayCallbackNC<T>(obj, cb, excb, sentcb) {}
 };
 
 /**
@@ -644,74 +727,84 @@ public:
  * @param cb The success method of the callback object.
  * @param excb The exception method of the callback object.
  * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_setJoystickValue.
- */
-template<class T> Callback_CarData_setJoystickValuePtr
-newCallback_CarData_setJoystickValue(const IceUtil::Handle<T>& instance, void (T::*cb)(), void (T::*excb)(const ::Ice::Exception&), void (T::*sentcb)(bool) = 0)
-{
-    return new CallbackNC_CarData_setJoystickValue<T>(instance, cb, excb, sentcb);
-}
-
-/**
- * Creates a callback wrapper instance that delegates to your object.
- * @param instance The callback object.
- * @param excb The exception method of the callback object.
- * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_setJoystickValue.
- */
-template<class T> Callback_CarData_setJoystickValuePtr
-newCallback_CarData_setJoystickValue(const IceUtil::Handle<T>& instance, void (T::*excb)(const ::Ice::Exception&), void (T::*sentcb)(bool) = 0)
-{
-    return new CallbackNC_CarData_setJoystickValue<T>(instance, 0, excb, sentcb);
-}
-
-/**
- * Creates a callback wrapper instance that delegates to your object.
- * @param instance The callback object.
- * @param cb The success method of the callback object.
- * @param excb The exception method of the callback object.
- * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_setJoystickValue.
- */
-template<class T> Callback_CarData_setJoystickValuePtr
-newCallback_CarData_setJoystickValue(T* instance, void (T::*cb)(), void (T::*excb)(const ::Ice::Exception&), void (T::*sentcb)(bool) = 0)
-{
-    return new CallbackNC_CarData_setJoystickValue<T>(instance, cb, excb, sentcb);
-}
-
-/**
- * Creates a callback wrapper instance that delegates to your object.
- * @param instance The callback object.
- * @param excb The exception method of the callback object.
- * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_setJoystickValue.
- */
-template<class T> Callback_CarData_setJoystickValuePtr
-newCallback_CarData_setJoystickValue(T* instance, void (T::*excb)(const ::Ice::Exception&), void (T::*sentcb)(bool) = 0)
-{
-    return new CallbackNC_CarData_setJoystickValue<T>(instance, 0, excb, sentcb);
-}
-
-/**
- * Type-safe asynchronous callback wrapper class with cookie support used for calls to
+ * @return An object that can be passed to an asynchronous invocation of
  * IceProxy::Data::CarData::begin_setJoystickValue.
- * Create a wrapper instance by calling ::Data::newCallback_CarData_setJoystickValue.
  */
-template<class T, typename CT>
-class Callback_CarData_setJoystickValue : public Callback_CarData_setJoystickValue_Base, public ::IceInternal::OnewayCallback<T, CT>
-{
+template <class T>
+Callback_CarData_setJoystickValuePtr newCallback_CarData_setJoystickValue(
+    const IceUtil::Handle<T> &instance, void (T::*cb)(),
+    void (T::*excb)(const ::Ice::Exception &), void (T::*sentcb)(bool) = 0) {
+  return new CallbackNC_CarData_setJoystickValue<T>(instance, cb, excb, sentcb);
+}
+
+/**
+ * Creates a callback wrapper instance that delegates to your object.
+ * @param instance The callback object.
+ * @param excb The exception method of the callback object.
+ * @param sentcb The sent method of the callback object.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_setJoystickValue.
+ */
+template <class T>
+Callback_CarData_setJoystickValuePtr
+newCallback_CarData_setJoystickValue(const IceUtil::Handle<T> &instance,
+                                     void (T::*excb)(const ::Ice::Exception &),
+                                     void (T::*sentcb)(bool) = 0) {
+  return new CallbackNC_CarData_setJoystickValue<T>(instance, 0, excb, sentcb);
+}
+
+/**
+ * Creates a callback wrapper instance that delegates to your object.
+ * @param instance The callback object.
+ * @param cb The success method of the callback object.
+ * @param excb The exception method of the callback object.
+ * @param sentcb The sent method of the callback object.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_setJoystickValue.
+ */
+template <class T>
+Callback_CarData_setJoystickValuePtr
+newCallback_CarData_setJoystickValue(T *instance, void (T::*cb)(),
+                                     void (T::*excb)(const ::Ice::Exception &),
+                                     void (T::*sentcb)(bool) = 0) {
+  return new CallbackNC_CarData_setJoystickValue<T>(instance, cb, excb, sentcb);
+}
+
+/**
+ * Creates a callback wrapper instance that delegates to your object.
+ * @param instance The callback object.
+ * @param excb The exception method of the callback object.
+ * @param sentcb The sent method of the callback object.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_setJoystickValue.
+ */
+template <class T>
+Callback_CarData_setJoystickValuePtr
+newCallback_CarData_setJoystickValue(T *instance,
+                                     void (T::*excb)(const ::Ice::Exception &),
+                                     void (T::*sentcb)(bool) = 0) {
+  return new CallbackNC_CarData_setJoystickValue<T>(instance, 0, excb, sentcb);
+}
+
+/**
+ * Type-safe asynchronous callback wrapper class with cookie support used for
+ * calls to IceProxy::Data::CarData::begin_setJoystickValue. Create a wrapper
+ * instance by calling ::Data::newCallback_CarData_setJoystickValue.
+ */
+template <class T, typename CT>
+class Callback_CarData_setJoystickValue
+    : public Callback_CarData_setJoystickValue_Base,
+      public ::IceInternal::OnewayCallback<T, CT> {
 public:
+  typedef IceUtil::Handle<T> TPtr;
 
-    typedef IceUtil::Handle<T> TPtr;
+  typedef void (T::*Exception)(const ::Ice::Exception &, const CT &);
+  typedef void (T::*Sent)(bool, const CT &);
+  typedef void (T::*Response)(const CT &);
 
-    typedef void (T::*Exception)(const ::Ice::Exception& , const CT&);
-    typedef void (T::*Sent)(bool , const CT&);
-    typedef void (T::*Response)(const CT&);
-
-    Callback_CarData_setJoystickValue(const TPtr& obj, Response cb, Exception excb, Sent sentcb)
-        : ::IceInternal::OnewayCallback<T, CT>(obj, cb, excb, sentcb)
-    {
-    }
+  Callback_CarData_setJoystickValue(const TPtr &obj, Response cb,
+                                    Exception excb, Sent sentcb)
+      : ::IceInternal::OnewayCallback<T, CT>(obj, cb, excb, sentcb) {}
 };
 
 /**
@@ -721,12 +814,16 @@ public:
  * @param cb The success method of the callback object.
  * @param excb The exception method of the callback object.
  * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_setJoystickValue.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_setJoystickValue.
  */
-template<class T, typename CT> Callback_CarData_setJoystickValuePtr
-newCallback_CarData_setJoystickValue(const IceUtil::Handle<T>& instance, void (T::*cb)(const CT&), void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
-{
-    return new Callback_CarData_setJoystickValue<T, CT>(instance, cb, excb, sentcb);
+template <class T, typename CT>
+Callback_CarData_setJoystickValuePtr newCallback_CarData_setJoystickValue(
+    const IceUtil::Handle<T> &instance, void (T::*cb)(const CT &),
+    void (T::*excb)(const ::Ice::Exception &, const CT &),
+    void (T::*sentcb)(bool, const CT &) = 0) {
+  return new Callback_CarData_setJoystickValue<T, CT>(instance, cb, excb,
+                                                      sentcb);
 }
 
 /**
@@ -735,12 +832,16 @@ newCallback_CarData_setJoystickValue(const IceUtil::Handle<T>& instance, void (T
  * @param instance The callback object.
  * @param excb The exception method of the callback object.
  * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_setJoystickValue.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_setJoystickValue.
  */
-template<class T, typename CT> Callback_CarData_setJoystickValuePtr
-newCallback_CarData_setJoystickValue(const IceUtil::Handle<T>& instance, void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
-{
-    return new Callback_CarData_setJoystickValue<T, CT>(instance, 0, excb, sentcb);
+template <class T, typename CT>
+Callback_CarData_setJoystickValuePtr newCallback_CarData_setJoystickValue(
+    const IceUtil::Handle<T> &instance,
+    void (T::*excb)(const ::Ice::Exception &, const CT &),
+    void (T::*sentcb)(bool, const CT &) = 0) {
+  return new Callback_CarData_setJoystickValue<T, CT>(instance, 0, excb,
+                                                      sentcb);
 }
 
 /**
@@ -750,12 +851,16 @@ newCallback_CarData_setJoystickValue(const IceUtil::Handle<T>& instance, void (T
  * @param cb The success method of the callback object.
  * @param excb The exception method of the callback object.
  * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_setJoystickValue.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_setJoystickValue.
  */
-template<class T, typename CT> Callback_CarData_setJoystickValuePtr
-newCallback_CarData_setJoystickValue(T* instance, void (T::*cb)(const CT&), void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
-{
-    return new Callback_CarData_setJoystickValue<T, CT>(instance, cb, excb, sentcb);
+template <class T, typename CT>
+Callback_CarData_setJoystickValuePtr newCallback_CarData_setJoystickValue(
+    T *instance, void (T::*cb)(const CT &),
+    void (T::*excb)(const ::Ice::Exception &, const CT &),
+    void (T::*sentcb)(bool, const CT &) = 0) {
+  return new Callback_CarData_setJoystickValue<T, CT>(instance, cb, excb,
+                                                      sentcb);
 }
 
 /**
@@ -764,59 +869,57 @@ newCallback_CarData_setJoystickValue(T* instance, void (T::*cb)(const CT&), void
  * @param instance The callback object.
  * @param excb The exception method of the callback object.
  * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_setJoystickValue.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_setJoystickValue.
  */
-template<class T, typename CT> Callback_CarData_setJoystickValuePtr
-newCallback_CarData_setJoystickValue(T* instance, void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
-{
-    return new Callback_CarData_setJoystickValue<T, CT>(instance, 0, excb, sentcb);
+template <class T, typename CT>
+Callback_CarData_setJoystickValuePtr newCallback_CarData_setJoystickValue(
+    T *instance, void (T::*excb)(const ::Ice::Exception &, const CT &),
+    void (T::*sentcb)(bool, const CT &) = 0) {
+  return new Callback_CarData_setJoystickValue<T, CT>(instance, 0, excb,
+                                                      sentcb);
 }
 
 /**
  * Type-safe asynchronous callback wrapper class used for calls to
  * IceProxy::Data::CarData::begin_getJoystickValue.
- * Create a wrapper instance by calling ::Data::newCallback_CarData_getJoystickValue.
+ * Create a wrapper instance by calling
+ * ::Data::newCallback_CarData_getJoystickValue.
  */
-template<class T>
-class CallbackNC_CarData_getJoystickValue : public Callback_CarData_getJoystickValue_Base, public ::IceInternal::TwowayCallbackNC<T>
-{
+template <class T>
+class CallbackNC_CarData_getJoystickValue
+    : public Callback_CarData_getJoystickValue_Base,
+      public ::IceInternal::TwowayCallbackNC<T> {
 public:
+  typedef IceUtil::Handle<T> TPtr;
 
-    typedef IceUtil::Handle<T> TPtr;
+  typedef void (T::*Exception)(const ::Ice::Exception &);
+  typedef void (T::*Sent)(bool);
+  typedef void (T::*Response)(bool);
 
-    typedef void (T::*Exception)(const ::Ice::Exception&);
-    typedef void (T::*Sent)(bool);
-    typedef void (T::*Response)(bool);
+  CallbackNC_CarData_getJoystickValue(const TPtr &obj, Response cb,
+                                      Exception excb, Sent sentcb)
+      : ::IceInternal::TwowayCallbackNC<T>(obj, cb != 0, excb, sentcb),
+        _response(cb) {}
 
-    CallbackNC_CarData_getJoystickValue(const TPtr& obj, Response cb, Exception excb, Sent sentcb)
-        : ::IceInternal::TwowayCallbackNC<T>(obj, cb != 0, excb, sentcb), _response(cb)
-    {
+  /// \cond INTERNAL
+  virtual void completed(const ::Ice::AsyncResultPtr &result) const {
+    CarDataPrx proxy = CarDataPrx::uncheckedCast(result->getProxy());
+    bool ret;
+    try {
+      ret = proxy->end_getJoystickValue(result);
+    } catch (const ::Ice::Exception &ex) {
+      ::IceInternal::CallbackNC<T>::exception(result, ex);
+      return;
     }
-
-    /// \cond INTERNAL
-    virtual void completed(const ::Ice::AsyncResultPtr& result) const
-    {
-        CarDataPrx proxy = CarDataPrx::uncheckedCast(result->getProxy());
-        bool ret;
-        try
-        {
-            ret = proxy->end_getJoystickValue(result);
-        }
-        catch(const ::Ice::Exception& ex)
-        {
-            ::IceInternal::CallbackNC<T>::exception(result, ex);
-            return;
-        }
-        if(_response)
-        {
-            (::IceInternal::CallbackNC<T>::_callback.get()->*_response)(ret);
-        }
+    if (_response) {
+      (::IceInternal::CallbackNC<T>::_callback.get()->*_response)(ret);
     }
-    /// \endcond
+  }
+  /// \endcond
 
 private:
-
-    Response _response;
+  Response _response;
 };
 
 /**
@@ -825,73 +928,73 @@ private:
  * @param cb The success method of the callback object.
  * @param excb The exception method of the callback object.
  * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_getJoystickValue.
- */
-template<class T> Callback_CarData_getJoystickValuePtr
-newCallback_CarData_getJoystickValue(const IceUtil::Handle<T>& instance, void (T::*cb)(bool), void (T::*excb)(const ::Ice::Exception&), void (T::*sentcb)(bool) = 0)
-{
-    return new CallbackNC_CarData_getJoystickValue<T>(instance, cb, excb, sentcb);
-}
-
-/**
- * Creates a callback wrapper instance that delegates to your object.
- * @param instance The callback object.
- * @param cb The success method of the callback object.
- * @param excb The exception method of the callback object.
- * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_getJoystickValue.
- */
-template<class T> Callback_CarData_getJoystickValuePtr
-newCallback_CarData_getJoystickValue(T* instance, void (T::*cb)(bool), void (T::*excb)(const ::Ice::Exception&), void (T::*sentcb)(bool) = 0)
-{
-    return new CallbackNC_CarData_getJoystickValue<T>(instance, cb, excb, sentcb);
-}
-
-/**
- * Type-safe asynchronous callback wrapper class with cookie support used for calls to
+ * @return An object that can be passed to an asynchronous invocation of
  * IceProxy::Data::CarData::begin_getJoystickValue.
- * Create a wrapper instance by calling ::Data::newCallback_CarData_getJoystickValue.
  */
-template<class T, typename CT>
-class Callback_CarData_getJoystickValue : public Callback_CarData_getJoystickValue_Base, public ::IceInternal::TwowayCallback<T, CT>
-{
+template <class T>
+Callback_CarData_getJoystickValuePtr newCallback_CarData_getJoystickValue(
+    const IceUtil::Handle<T> &instance, void (T::*cb)(bool),
+    void (T::*excb)(const ::Ice::Exception &), void (T::*sentcb)(bool) = 0) {
+  return new CallbackNC_CarData_getJoystickValue<T>(instance, cb, excb, sentcb);
+}
+
+/**
+ * Creates a callback wrapper instance that delegates to your object.
+ * @param instance The callback object.
+ * @param cb The success method of the callback object.
+ * @param excb The exception method of the callback object.
+ * @param sentcb The sent method of the callback object.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_getJoystickValue.
+ */
+template <class T>
+Callback_CarData_getJoystickValuePtr
+newCallback_CarData_getJoystickValue(T *instance, void (T::*cb)(bool),
+                                     void (T::*excb)(const ::Ice::Exception &),
+                                     void (T::*sentcb)(bool) = 0) {
+  return new CallbackNC_CarData_getJoystickValue<T>(instance, cb, excb, sentcb);
+}
+
+/**
+ * Type-safe asynchronous callback wrapper class with cookie support used for
+ * calls to IceProxy::Data::CarData::begin_getJoystickValue. Create a wrapper
+ * instance by calling ::Data::newCallback_CarData_getJoystickValue.
+ */
+template <class T, typename CT>
+class Callback_CarData_getJoystickValue
+    : public Callback_CarData_getJoystickValue_Base,
+      public ::IceInternal::TwowayCallback<T, CT> {
 public:
+  typedef IceUtil::Handle<T> TPtr;
 
-    typedef IceUtil::Handle<T> TPtr;
+  typedef void (T::*Exception)(const ::Ice::Exception &, const CT &);
+  typedef void (T::*Sent)(bool, const CT &);
+  typedef void (T::*Response)(bool, const CT &);
 
-    typedef void (T::*Exception)(const ::Ice::Exception& , const CT&);
-    typedef void (T::*Sent)(bool , const CT&);
-    typedef void (T::*Response)(bool, const CT&);
+  Callback_CarData_getJoystickValue(const TPtr &obj, Response cb,
+                                    Exception excb, Sent sentcb)
+      : ::IceInternal::TwowayCallback<T, CT>(obj, cb != 0, excb, sentcb),
+        _response(cb) {}
 
-    Callback_CarData_getJoystickValue(const TPtr& obj, Response cb, Exception excb, Sent sentcb)
-        : ::IceInternal::TwowayCallback<T, CT>(obj, cb != 0, excb, sentcb), _response(cb)
-    {
+  /// \cond INTERNAL
+  virtual void completed(const ::Ice::AsyncResultPtr &result) const {
+    CarDataPrx proxy = CarDataPrx::uncheckedCast(result->getProxy());
+    bool ret;
+    try {
+      ret = proxy->end_getJoystickValue(result);
+    } catch (const ::Ice::Exception &ex) {
+      ::IceInternal::Callback<T, CT>::exception(result, ex);
+      return;
     }
-
-    /// \cond INTERNAL
-    virtual void completed(const ::Ice::AsyncResultPtr& result) const
-    {
-        CarDataPrx proxy = CarDataPrx::uncheckedCast(result->getProxy());
-        bool ret;
-        try
-        {
-            ret = proxy->end_getJoystickValue(result);
-        }
-        catch(const ::Ice::Exception& ex)
-        {
-            ::IceInternal::Callback<T, CT>::exception(result, ex);
-            return;
-        }
-        if(_response)
-        {
-            (::IceInternal::Callback<T, CT>::_callback.get()->*_response)(ret, CT::dynamicCast(result->getCookie()));
-        }
+    if (_response) {
+      (::IceInternal::Callback<T, CT>::_callback.get()->*_response)(
+          ret, CT::dynamicCast(result->getCookie()));
     }
-    /// \endcond
+  }
+  /// \endcond
 
 private:
-
-    Response _response;
+  Response _response;
 };
 
 /**
@@ -901,12 +1004,16 @@ private:
  * @param cb The success method of the callback object.
  * @param excb The exception method of the callback object.
  * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_getJoystickValue.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_getJoystickValue.
  */
-template<class T, typename CT> Callback_CarData_getJoystickValuePtr
-newCallback_CarData_getJoystickValue(const IceUtil::Handle<T>& instance, void (T::*cb)(bool, const CT&), void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
-{
-    return new Callback_CarData_getJoystickValue<T, CT>(instance, cb, excb, sentcb);
+template <class T, typename CT>
+Callback_CarData_getJoystickValuePtr newCallback_CarData_getJoystickValue(
+    const IceUtil::Handle<T> &instance, void (T::*cb)(bool, const CT &),
+    void (T::*excb)(const ::Ice::Exception &, const CT &),
+    void (T::*sentcb)(bool, const CT &) = 0) {
+  return new Callback_CarData_getJoystickValue<T, CT>(instance, cb, excb,
+                                                      sentcb);
 }
 
 /**
@@ -916,34 +1023,38 @@ newCallback_CarData_getJoystickValue(const IceUtil::Handle<T>& instance, void (T
  * @param cb The success method of the callback object.
  * @param excb The exception method of the callback object.
  * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_getJoystickValue.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_getJoystickValue.
  */
-template<class T, typename CT> Callback_CarData_getJoystickValuePtr
-newCallback_CarData_getJoystickValue(T* instance, void (T::*cb)(bool, const CT&), void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
-{
-    return new Callback_CarData_getJoystickValue<T, CT>(instance, cb, excb, sentcb);
+template <class T, typename CT>
+Callback_CarData_getJoystickValuePtr newCallback_CarData_getJoystickValue(
+    T *instance, void (T::*cb)(bool, const CT &),
+    void (T::*excb)(const ::Ice::Exception &, const CT &),
+    void (T::*sentcb)(bool, const CT &) = 0) {
+  return new Callback_CarData_getJoystickValue<T, CT>(instance, cb, excb,
+                                                      sentcb);
 }
 
 /**
  * Type-safe asynchronous callback wrapper class used for calls to
  * IceProxy::Data::CarData::begin_setCarTemperatureValue.
- * Create a wrapper instance by calling ::Data::newCallback_CarData_setCarTemperatureValue.
+ * Create a wrapper instance by calling
+ * ::Data::newCallback_CarData_setCarTemperatureValue.
  */
-template<class T>
-class CallbackNC_CarData_setCarTemperatureValue : public Callback_CarData_setCarTemperatureValue_Base, public ::IceInternal::OnewayCallbackNC<T>
-{
+template <class T>
+class CallbackNC_CarData_setCarTemperatureValue
+    : public Callback_CarData_setCarTemperatureValue_Base,
+      public ::IceInternal::OnewayCallbackNC<T> {
 public:
+  typedef IceUtil::Handle<T> TPtr;
 
-    typedef IceUtil::Handle<T> TPtr;
+  typedef void (T::*Exception)(const ::Ice::Exception &);
+  typedef void (T::*Sent)(bool);
+  typedef void (T::*Response)();
 
-    typedef void (T::*Exception)(const ::Ice::Exception&);
-    typedef void (T::*Sent)(bool);
-    typedef void (T::*Response)();
-
-    CallbackNC_CarData_setCarTemperatureValue(const TPtr& obj, Response cb, Exception excb, Sent sentcb)
-        : ::IceInternal::OnewayCallbackNC<T>(obj, cb, excb, sentcb)
-    {
-    }
+  CallbackNC_CarData_setCarTemperatureValue(const TPtr &obj, Response cb,
+                                            Exception excb, Sent sentcb)
+      : ::IceInternal::OnewayCallbackNC<T>(obj, cb, excb, sentcb) {}
 };
 
 /**
@@ -952,74 +1063,90 @@ public:
  * @param cb The success method of the callback object.
  * @param excb The exception method of the callback object.
  * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_setCarTemperatureValue.
- */
-template<class T> Callback_CarData_setCarTemperatureValuePtr
-newCallback_CarData_setCarTemperatureValue(const IceUtil::Handle<T>& instance, void (T::*cb)(), void (T::*excb)(const ::Ice::Exception&), void (T::*sentcb)(bool) = 0)
-{
-    return new CallbackNC_CarData_setCarTemperatureValue<T>(instance, cb, excb, sentcb);
-}
-
-/**
- * Creates a callback wrapper instance that delegates to your object.
- * @param instance The callback object.
- * @param excb The exception method of the callback object.
- * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_setCarTemperatureValue.
- */
-template<class T> Callback_CarData_setCarTemperatureValuePtr
-newCallback_CarData_setCarTemperatureValue(const IceUtil::Handle<T>& instance, void (T::*excb)(const ::Ice::Exception&), void (T::*sentcb)(bool) = 0)
-{
-    return new CallbackNC_CarData_setCarTemperatureValue<T>(instance, 0, excb, sentcb);
-}
-
-/**
- * Creates a callback wrapper instance that delegates to your object.
- * @param instance The callback object.
- * @param cb The success method of the callback object.
- * @param excb The exception method of the callback object.
- * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_setCarTemperatureValue.
- */
-template<class T> Callback_CarData_setCarTemperatureValuePtr
-newCallback_CarData_setCarTemperatureValue(T* instance, void (T::*cb)(), void (T::*excb)(const ::Ice::Exception&), void (T::*sentcb)(bool) = 0)
-{
-    return new CallbackNC_CarData_setCarTemperatureValue<T>(instance, cb, excb, sentcb);
-}
-
-/**
- * Creates a callback wrapper instance that delegates to your object.
- * @param instance The callback object.
- * @param excb The exception method of the callback object.
- * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_setCarTemperatureValue.
- */
-template<class T> Callback_CarData_setCarTemperatureValuePtr
-newCallback_CarData_setCarTemperatureValue(T* instance, void (T::*excb)(const ::Ice::Exception&), void (T::*sentcb)(bool) = 0)
-{
-    return new CallbackNC_CarData_setCarTemperatureValue<T>(instance, 0, excb, sentcb);
-}
-
-/**
- * Type-safe asynchronous callback wrapper class with cookie support used for calls to
+ * @return An object that can be passed to an asynchronous invocation of
  * IceProxy::Data::CarData::begin_setCarTemperatureValue.
- * Create a wrapper instance by calling ::Data::newCallback_CarData_setCarTemperatureValue.
  */
-template<class T, typename CT>
-class Callback_CarData_setCarTemperatureValue : public Callback_CarData_setCarTemperatureValue_Base, public ::IceInternal::OnewayCallback<T, CT>
-{
+template <class T>
+Callback_CarData_setCarTemperatureValuePtr
+newCallback_CarData_setCarTemperatureValue(
+    const IceUtil::Handle<T> &instance, void (T::*cb)(),
+    void (T::*excb)(const ::Ice::Exception &), void (T::*sentcb)(bool) = 0) {
+  return new CallbackNC_CarData_setCarTemperatureValue<T>(instance, cb, excb,
+                                                          sentcb);
+}
+
+/**
+ * Creates a callback wrapper instance that delegates to your object.
+ * @param instance The callback object.
+ * @param excb The exception method of the callback object.
+ * @param sentcb The sent method of the callback object.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_setCarTemperatureValue.
+ */
+template <class T>
+Callback_CarData_setCarTemperatureValuePtr
+newCallback_CarData_setCarTemperatureValue(
+    const IceUtil::Handle<T> &instance,
+    void (T::*excb)(const ::Ice::Exception &), void (T::*sentcb)(bool) = 0) {
+  return new CallbackNC_CarData_setCarTemperatureValue<T>(instance, 0, excb,
+                                                          sentcb);
+}
+
+/**
+ * Creates a callback wrapper instance that delegates to your object.
+ * @param instance The callback object.
+ * @param cb The success method of the callback object.
+ * @param excb The exception method of the callback object.
+ * @param sentcb The sent method of the callback object.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_setCarTemperatureValue.
+ */
+template <class T>
+Callback_CarData_setCarTemperatureValuePtr
+newCallback_CarData_setCarTemperatureValue(
+    T *instance, void (T::*cb)(), void (T::*excb)(const ::Ice::Exception &),
+    void (T::*sentcb)(bool) = 0) {
+  return new CallbackNC_CarData_setCarTemperatureValue<T>(instance, cb, excb,
+                                                          sentcb);
+}
+
+/**
+ * Creates a callback wrapper instance that delegates to your object.
+ * @param instance The callback object.
+ * @param excb The exception method of the callback object.
+ * @param sentcb The sent method of the callback object.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_setCarTemperatureValue.
+ */
+template <class T>
+Callback_CarData_setCarTemperatureValuePtr
+newCallback_CarData_setCarTemperatureValue(
+    T *instance, void (T::*excb)(const ::Ice::Exception &),
+    void (T::*sentcb)(bool) = 0) {
+  return new CallbackNC_CarData_setCarTemperatureValue<T>(instance, 0, excb,
+                                                          sentcb);
+}
+
+/**
+ * Type-safe asynchronous callback wrapper class with cookie support used for
+ * calls to IceProxy::Data::CarData::begin_setCarTemperatureValue. Create a
+ * wrapper instance by calling
+ * ::Data::newCallback_CarData_setCarTemperatureValue.
+ */
+template <class T, typename CT>
+class Callback_CarData_setCarTemperatureValue
+    : public Callback_CarData_setCarTemperatureValue_Base,
+      public ::IceInternal::OnewayCallback<T, CT> {
 public:
+  typedef IceUtil::Handle<T> TPtr;
 
-    typedef IceUtil::Handle<T> TPtr;
+  typedef void (T::*Exception)(const ::Ice::Exception &, const CT &);
+  typedef void (T::*Sent)(bool, const CT &);
+  typedef void (T::*Response)(const CT &);
 
-    typedef void (T::*Exception)(const ::Ice::Exception& , const CT&);
-    typedef void (T::*Sent)(bool , const CT&);
-    typedef void (T::*Response)(const CT&);
-
-    Callback_CarData_setCarTemperatureValue(const TPtr& obj, Response cb, Exception excb, Sent sentcb)
-        : ::IceInternal::OnewayCallback<T, CT>(obj, cb, excb, sentcb)
-    {
-    }
+  Callback_CarData_setCarTemperatureValue(const TPtr &obj, Response cb,
+                                          Exception excb, Sent sentcb)
+      : ::IceInternal::OnewayCallback<T, CT>(obj, cb, excb, sentcb) {}
 };
 
 /**
@@ -1029,12 +1156,17 @@ public:
  * @param cb The success method of the callback object.
  * @param excb The exception method of the callback object.
  * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_setCarTemperatureValue.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_setCarTemperatureValue.
  */
-template<class T, typename CT> Callback_CarData_setCarTemperatureValuePtr
-newCallback_CarData_setCarTemperatureValue(const IceUtil::Handle<T>& instance, void (T::*cb)(const CT&), void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
-{
-    return new Callback_CarData_setCarTemperatureValue<T, CT>(instance, cb, excb, sentcb);
+template <class T, typename CT>
+Callback_CarData_setCarTemperatureValuePtr
+newCallback_CarData_setCarTemperatureValue(
+    const IceUtil::Handle<T> &instance, void (T::*cb)(const CT &),
+    void (T::*excb)(const ::Ice::Exception &, const CT &),
+    void (T::*sentcb)(bool, const CT &) = 0) {
+  return new Callback_CarData_setCarTemperatureValue<T, CT>(instance, cb, excb,
+                                                            sentcb);
 }
 
 /**
@@ -1043,12 +1175,17 @@ newCallback_CarData_setCarTemperatureValue(const IceUtil::Handle<T>& instance, v
  * @param instance The callback object.
  * @param excb The exception method of the callback object.
  * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_setCarTemperatureValue.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_setCarTemperatureValue.
  */
-template<class T, typename CT> Callback_CarData_setCarTemperatureValuePtr
-newCallback_CarData_setCarTemperatureValue(const IceUtil::Handle<T>& instance, void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
-{
-    return new Callback_CarData_setCarTemperatureValue<T, CT>(instance, 0, excb, sentcb);
+template <class T, typename CT>
+Callback_CarData_setCarTemperatureValuePtr
+newCallback_CarData_setCarTemperatureValue(
+    const IceUtil::Handle<T> &instance,
+    void (T::*excb)(const ::Ice::Exception &, const CT &),
+    void (T::*sentcb)(bool, const CT &) = 0) {
+  return new Callback_CarData_setCarTemperatureValue<T, CT>(instance, 0, excb,
+                                                            sentcb);
 }
 
 /**
@@ -1058,12 +1195,17 @@ newCallback_CarData_setCarTemperatureValue(const IceUtil::Handle<T>& instance, v
  * @param cb The success method of the callback object.
  * @param excb The exception method of the callback object.
  * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_setCarTemperatureValue.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_setCarTemperatureValue.
  */
-template<class T, typename CT> Callback_CarData_setCarTemperatureValuePtr
-newCallback_CarData_setCarTemperatureValue(T* instance, void (T::*cb)(const CT&), void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
-{
-    return new Callback_CarData_setCarTemperatureValue<T, CT>(instance, cb, excb, sentcb);
+template <class T, typename CT>
+Callback_CarData_setCarTemperatureValuePtr
+newCallback_CarData_setCarTemperatureValue(
+    T *instance, void (T::*cb)(const CT &),
+    void (T::*excb)(const ::Ice::Exception &, const CT &),
+    void (T::*sentcb)(bool, const CT &) = 0) {
+  return new Callback_CarData_setCarTemperatureValue<T, CT>(instance, cb, excb,
+                                                            sentcb);
 }
 
 /**
@@ -1072,59 +1214,58 @@ newCallback_CarData_setCarTemperatureValue(T* instance, void (T::*cb)(const CT&)
  * @param instance The callback object.
  * @param excb The exception method of the callback object.
  * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_setCarTemperatureValue.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_setCarTemperatureValue.
  */
-template<class T, typename CT> Callback_CarData_setCarTemperatureValuePtr
-newCallback_CarData_setCarTemperatureValue(T* instance, void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
-{
-    return new Callback_CarData_setCarTemperatureValue<T, CT>(instance, 0, excb, sentcb);
+template <class T, typename CT>
+Callback_CarData_setCarTemperatureValuePtr
+newCallback_CarData_setCarTemperatureValue(
+    T *instance, void (T::*excb)(const ::Ice::Exception &, const CT &),
+    void (T::*sentcb)(bool, const CT &) = 0) {
+  return new Callback_CarData_setCarTemperatureValue<T, CT>(instance, 0, excb,
+                                                            sentcb);
 }
 
 /**
  * Type-safe asynchronous callback wrapper class used for calls to
  * IceProxy::Data::CarData::begin_getCarTemperatureValue.
- * Create a wrapper instance by calling ::Data::newCallback_CarData_getCarTemperatureValue.
+ * Create a wrapper instance by calling
+ * ::Data::newCallback_CarData_getCarTemperatureValue.
  */
-template<class T>
-class CallbackNC_CarData_getCarTemperatureValue : public Callback_CarData_getCarTemperatureValue_Base, public ::IceInternal::TwowayCallbackNC<T>
-{
+template <class T>
+class CallbackNC_CarData_getCarTemperatureValue
+    : public Callback_CarData_getCarTemperatureValue_Base,
+      public ::IceInternal::TwowayCallbackNC<T> {
 public:
+  typedef IceUtil::Handle<T> TPtr;
 
-    typedef IceUtil::Handle<T> TPtr;
+  typedef void (T::*Exception)(const ::Ice::Exception &);
+  typedef void (T::*Sent)(bool);
+  typedef void (T::*Response)(::Ice::Double);
 
-    typedef void (T::*Exception)(const ::Ice::Exception&);
-    typedef void (T::*Sent)(bool);
-    typedef void (T::*Response)(::Ice::Double);
+  CallbackNC_CarData_getCarTemperatureValue(const TPtr &obj, Response cb,
+                                            Exception excb, Sent sentcb)
+      : ::IceInternal::TwowayCallbackNC<T>(obj, cb != 0, excb, sentcb),
+        _response(cb) {}
 
-    CallbackNC_CarData_getCarTemperatureValue(const TPtr& obj, Response cb, Exception excb, Sent sentcb)
-        : ::IceInternal::TwowayCallbackNC<T>(obj, cb != 0, excb, sentcb), _response(cb)
-    {
+  /// \cond INTERNAL
+  virtual void completed(const ::Ice::AsyncResultPtr &result) const {
+    CarDataPrx proxy = CarDataPrx::uncheckedCast(result->getProxy());
+    ::Ice::Double ret;
+    try {
+      ret = proxy->end_getCarTemperatureValue(result);
+    } catch (const ::Ice::Exception &ex) {
+      ::IceInternal::CallbackNC<T>::exception(result, ex);
+      return;
     }
-
-    /// \cond INTERNAL
-    virtual void completed(const ::Ice::AsyncResultPtr& result) const
-    {
-        CarDataPrx proxy = CarDataPrx::uncheckedCast(result->getProxy());
-        ::Ice::Double ret;
-        try
-        {
-            ret = proxy->end_getCarTemperatureValue(result);
-        }
-        catch(const ::Ice::Exception& ex)
-        {
-            ::IceInternal::CallbackNC<T>::exception(result, ex);
-            return;
-        }
-        if(_response)
-        {
-            (::IceInternal::CallbackNC<T>::_callback.get()->*_response)(ret);
-        }
+    if (_response) {
+      (::IceInternal::CallbackNC<T>::_callback.get()->*_response)(ret);
     }
-    /// \endcond
+  }
+  /// \endcond
 
 private:
-
-    Response _response;
+  Response _response;
 };
 
 /**
@@ -1133,73 +1274,77 @@ private:
  * @param cb The success method of the callback object.
  * @param excb The exception method of the callback object.
  * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_getCarTemperatureValue.
- */
-template<class T> Callback_CarData_getCarTemperatureValuePtr
-newCallback_CarData_getCarTemperatureValue(const IceUtil::Handle<T>& instance, void (T::*cb)(::Ice::Double), void (T::*excb)(const ::Ice::Exception&), void (T::*sentcb)(bool) = 0)
-{
-    return new CallbackNC_CarData_getCarTemperatureValue<T>(instance, cb, excb, sentcb);
-}
-
-/**
- * Creates a callback wrapper instance that delegates to your object.
- * @param instance The callback object.
- * @param cb The success method of the callback object.
- * @param excb The exception method of the callback object.
- * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_getCarTemperatureValue.
- */
-template<class T> Callback_CarData_getCarTemperatureValuePtr
-newCallback_CarData_getCarTemperatureValue(T* instance, void (T::*cb)(::Ice::Double), void (T::*excb)(const ::Ice::Exception&), void (T::*sentcb)(bool) = 0)
-{
-    return new CallbackNC_CarData_getCarTemperatureValue<T>(instance, cb, excb, sentcb);
-}
-
-/**
- * Type-safe asynchronous callback wrapper class with cookie support used for calls to
+ * @return An object that can be passed to an asynchronous invocation of
  * IceProxy::Data::CarData::begin_getCarTemperatureValue.
- * Create a wrapper instance by calling ::Data::newCallback_CarData_getCarTemperatureValue.
  */
-template<class T, typename CT>
-class Callback_CarData_getCarTemperatureValue : public Callback_CarData_getCarTemperatureValue_Base, public ::IceInternal::TwowayCallback<T, CT>
-{
+template <class T>
+Callback_CarData_getCarTemperatureValuePtr
+newCallback_CarData_getCarTemperatureValue(
+    const IceUtil::Handle<T> &instance, void (T::*cb)(::Ice::Double),
+    void (T::*excb)(const ::Ice::Exception &), void (T::*sentcb)(bool) = 0) {
+  return new CallbackNC_CarData_getCarTemperatureValue<T>(instance, cb, excb,
+                                                          sentcb);
+}
+
+/**
+ * Creates a callback wrapper instance that delegates to your object.
+ * @param instance The callback object.
+ * @param cb The success method of the callback object.
+ * @param excb The exception method of the callback object.
+ * @param sentcb The sent method of the callback object.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_getCarTemperatureValue.
+ */
+template <class T>
+Callback_CarData_getCarTemperatureValuePtr
+newCallback_CarData_getCarTemperatureValue(
+    T *instance, void (T::*cb)(::Ice::Double),
+    void (T::*excb)(const ::Ice::Exception &), void (T::*sentcb)(bool) = 0) {
+  return new CallbackNC_CarData_getCarTemperatureValue<T>(instance, cb, excb,
+                                                          sentcb);
+}
+
+/**
+ * Type-safe asynchronous callback wrapper class with cookie support used for
+ * calls to IceProxy::Data::CarData::begin_getCarTemperatureValue. Create a
+ * wrapper instance by calling
+ * ::Data::newCallback_CarData_getCarTemperatureValue.
+ */
+template <class T, typename CT>
+class Callback_CarData_getCarTemperatureValue
+    : public Callback_CarData_getCarTemperatureValue_Base,
+      public ::IceInternal::TwowayCallback<T, CT> {
 public:
+  typedef IceUtil::Handle<T> TPtr;
 
-    typedef IceUtil::Handle<T> TPtr;
+  typedef void (T::*Exception)(const ::Ice::Exception &, const CT &);
+  typedef void (T::*Sent)(bool, const CT &);
+  typedef void (T::*Response)(::Ice::Double, const CT &);
 
-    typedef void (T::*Exception)(const ::Ice::Exception& , const CT&);
-    typedef void (T::*Sent)(bool , const CT&);
-    typedef void (T::*Response)(::Ice::Double, const CT&);
+  Callback_CarData_getCarTemperatureValue(const TPtr &obj, Response cb,
+                                          Exception excb, Sent sentcb)
+      : ::IceInternal::TwowayCallback<T, CT>(obj, cb != 0, excb, sentcb),
+        _response(cb) {}
 
-    Callback_CarData_getCarTemperatureValue(const TPtr& obj, Response cb, Exception excb, Sent sentcb)
-        : ::IceInternal::TwowayCallback<T, CT>(obj, cb != 0, excb, sentcb), _response(cb)
-    {
+  /// \cond INTERNAL
+  virtual void completed(const ::Ice::AsyncResultPtr &result) const {
+    CarDataPrx proxy = CarDataPrx::uncheckedCast(result->getProxy());
+    ::Ice::Double ret;
+    try {
+      ret = proxy->end_getCarTemperatureValue(result);
+    } catch (const ::Ice::Exception &ex) {
+      ::IceInternal::Callback<T, CT>::exception(result, ex);
+      return;
     }
-
-    /// \cond INTERNAL
-    virtual void completed(const ::Ice::AsyncResultPtr& result) const
-    {
-        CarDataPrx proxy = CarDataPrx::uncheckedCast(result->getProxy());
-        ::Ice::Double ret;
-        try
-        {
-            ret = proxy->end_getCarTemperatureValue(result);
-        }
-        catch(const ::Ice::Exception& ex)
-        {
-            ::IceInternal::Callback<T, CT>::exception(result, ex);
-            return;
-        }
-        if(_response)
-        {
-            (::IceInternal::Callback<T, CT>::_callback.get()->*_response)(ret, CT::dynamicCast(result->getCookie()));
-        }
+    if (_response) {
+      (::IceInternal::Callback<T, CT>::_callback.get()->*_response)(
+          ret, CT::dynamicCast(result->getCookie()));
     }
-    /// \endcond
+  }
+  /// \endcond
 
 private:
-
-    Response _response;
+  Response _response;
 };
 
 /**
@@ -1209,12 +1354,18 @@ private:
  * @param cb The success method of the callback object.
  * @param excb The exception method of the callback object.
  * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_getCarTemperatureValue.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_getCarTemperatureValue.
  */
-template<class T, typename CT> Callback_CarData_getCarTemperatureValuePtr
-newCallback_CarData_getCarTemperatureValue(const IceUtil::Handle<T>& instance, void (T::*cb)(::Ice::Double, const CT&), void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
-{
-    return new Callback_CarData_getCarTemperatureValue<T, CT>(instance, cb, excb, sentcb);
+template <class T, typename CT>
+Callback_CarData_getCarTemperatureValuePtr
+newCallback_CarData_getCarTemperatureValue(
+    const IceUtil::Handle<T> &instance,
+    void (T::*cb)(::Ice::Double, const CT &),
+    void (T::*excb)(const ::Ice::Exception &, const CT &),
+    void (T::*sentcb)(bool, const CT &) = 0) {
+  return new Callback_CarData_getCarTemperatureValue<T, CT>(instance, cb, excb,
+                                                            sentcb);
 }
 
 /**
@@ -1224,15 +1375,20 @@ newCallback_CarData_getCarTemperatureValue(const IceUtil::Handle<T>& instance, v
  * @param cb The success method of the callback object.
  * @param excb The exception method of the callback object.
  * @param sentcb The sent method of the callback object.
- * @return An object that can be passed to an asynchronous invocation of IceProxy::Data::CarData::begin_getCarTemperatureValue.
+ * @return An object that can be passed to an asynchronous invocation of
+ * IceProxy::Data::CarData::begin_getCarTemperatureValue.
  */
-template<class T, typename CT> Callback_CarData_getCarTemperatureValuePtr
-newCallback_CarData_getCarTemperatureValue(T* instance, void (T::*cb)(::Ice::Double, const CT&), void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
-{
-    return new Callback_CarData_getCarTemperatureValue<T, CT>(instance, cb, excb, sentcb);
+template <class T, typename CT>
+Callback_CarData_getCarTemperatureValuePtr
+newCallback_CarData_getCarTemperatureValue(
+    T *instance, void (T::*cb)(::Ice::Double, const CT &),
+    void (T::*excb)(const ::Ice::Exception &, const CT &),
+    void (T::*sentcb)(bool, const CT &) = 0) {
+  return new Callback_CarData_getCarTemperatureValue<T, CT>(instance, cb, excb,
+                                                            sentcb);
 }
 
-}
+} // namespace Data
 
 #endif
 

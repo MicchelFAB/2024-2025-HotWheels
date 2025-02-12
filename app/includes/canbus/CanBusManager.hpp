@@ -36,7 +36,7 @@ public:
 
   QThread *getThread() const { return m_thread; }
 
-  signals:
+signals:
   /*!
    * @brief Signal emitted when the speed is updated.
    * @param newSpeed The new speed value.

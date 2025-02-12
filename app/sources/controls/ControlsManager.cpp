@@ -31,14 +31,12 @@
  * @details This constructor initializes the ControlsManager object.
  */
 ControlsManager::ControlsManager(int argc, char **argv, QObject *parent)
-    : QObject(parent), m_clientObject(nullptr),
-    m_clientThread(nullptr) {
+    : QObject(parent), m_clientObject(nullptr), m_clientThread(nullptr) {
 
   // **Client Middleware Interface Thread**
   m_clientObject = new ClientThread();
-  m_clientThread = QThread::create([this, argc, argv]() {
-      m_clientObject->runClient(argc, argv);
-  });
+  m_clientThread = QThread::create(
+      [this, argc, argv]() { m_clientObject->runClient(argc, argv); });
   m_clientThread->start();
 }
 
@@ -47,8 +45,7 @@ ControlsManager::ControlsManager(int argc, char **argv, QObject *parent)
  * @details This destructor stops the joystick controller and waits for the
  * thread to finish.
  */
-ControlsManager::~ControlsManager()
-{
+ControlsManager::~ControlsManager() {
   if (m_clientThread) {
     m_clientObject->setRunning(false);
     m_clientThread->quit();
@@ -67,8 +64,7 @@ ControlsManager::~ControlsManager()
 void ControlsManager::drivingModeUpdated(DrivingMode newMode) {
   if (newMode == DrivingMode::Automatic) {
     m_clientObject->setJoystickValue(false);
-  }
-  else {
+  } else {
     m_clientObject->setJoystickValue(true);
   }
 }

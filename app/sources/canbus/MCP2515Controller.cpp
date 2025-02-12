@@ -120,7 +120,7 @@ void MCP2515Controller::processReading() {
     }
 
     if (stopReadingFlag) {
-        break;
+      break;
     }
 
     QThread::msleep(10);

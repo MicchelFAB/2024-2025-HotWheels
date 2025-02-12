@@ -1,8 +1,8 @@
 #include "ControlsManager.hpp"
+#include <QDebug>
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <unistd.h>
-#include <QDebug>
 
 /*!
  * @brief Construct a new ControlsManager object.
@@ -38,7 +38,6 @@ ControlsManager::ControlsManager(int argc, char **argv, QObject *parent)
     return;
   }
 
-
   // Start the joystick controller in its own thread
   m_manualControllerThread = new QThread(this);
   m_manualController->moveToThread(m_manualControllerThread);
@@ -49,7 +48,6 @@ ControlsManager::ControlsManager(int argc, char **argv, QObject *parent)
           m_manualControllerThread, &QThread::quit);
 
   m_manualControllerThread->start();
-
 
   // **Server Middleware Thread**
 
@@ -64,36 +62,33 @@ ControlsManager::ControlsManager(int argc, char **argv, QObject *parent)
   });
   m_carDataThread->start();
 
-
   // **Client Middleware Interface Thread**
   m_clientObject = new ClientThread();
-  m_clientThread = QThread::create([this, argc, argv]() {
-      m_clientObject->runClient(argc, argv);
-  });
+  m_clientThread = QThread::create(
+      [this, argc, argv]() { m_clientObject->runClient(argc, argv); });
   m_clientThread->start();
-
 
   // **Process Monitoring Thread**
   m_processMonitorThread = QThread::create([this]() {
-    QString targetProcessName = "HotWheels-app"; // Change this to actual process name
+    QString targetProcessName =
+        "HotWheels-app"; // Change this to actual process name
 
     while (m_threadRunning) {
       if (!isProcessRunning(targetProcessName)) {
         if (m_currentMode == DrivingMode::Automatic)
-                setMode(DrivingMode::Manual);
-        //qDebug() << "Cluster is not running.";
+          setMode(DrivingMode::Manual);
+        // qDebug() << "Cluster is not running.";
       }
-      QThread::sleep(1);  // Check every 1 second
+      QThread::sleep(1); // Check every 1 second
     }
   });
   m_processMonitorThread->start();
-
 
   // **Joystick Control Thread**
   m_joystickControlThread = QThread::create([this]() {
     while (m_threadRunning) {
       readJoystickEnable();
-      QThread::msleep(1000);  // Adjust delay as needed
+      QThread::msleep(1000); // Adjust delay as needed
     }
   });
   m_joystickControlThread->start();
@@ -101,7 +96,8 @@ ControlsManager::ControlsManager(int argc, char **argv, QObject *parent)
 
 /*!
  * @brief Destroy the ControlsManager object.
- * @details Ensures proper cleanup of all worker threads and dynamically allocated objects.
+ * @details Ensures proper cleanup of all worker threads and dynamically
+ * allocated objects.
  */
 ControlsManager::~ControlsManager() {
   // Stop the client thread safely
@@ -155,11 +151,11 @@ ControlsManager::~ControlsManager() {
  * @details Uses the `pgrep` command to determine if a given process is active.
  */
 bool ControlsManager::isProcessRunning(const QString &processName) {
-    QProcess process;
-    process.start("pgrep", QStringList() << processName);
-    process.waitForFinished();
+  QProcess process;
+  process.start("pgrep", QStringList() << processName);
+  process.waitForFinished();
 
-    return !process.readAllStandardOutput().isEmpty();
+  return !process.readAllStandardOutput().isEmpty();
 }
 
 /*!
@@ -167,8 +163,7 @@ bool ControlsManager::isProcessRunning(const QString &processName) {
  * @details Checks if joystick control is enabled through the client middleware
  *          and updates the driving mode accordingly.
  */
-void ControlsManager::readJoystickEnable()
-{
+void ControlsManager::readJoystickEnable() {
   bool joystickData = m_clientObject->getJoystickValue();
   if (joystickData) {
     setMode(DrivingMode::Manual);
